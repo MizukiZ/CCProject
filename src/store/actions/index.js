@@ -1,0 +1,1 @@
+export { fetchCurrencyData } from "./currencies"
