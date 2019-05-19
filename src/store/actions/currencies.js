@@ -1,4 +1,7 @@
-import { FETCH_CURRENCY_HISTORICAL_DATA } from "./actionTypes"
+import {
+  FETCH_CURRENCY_HISTORICAL_DATA,
+  FETCH_CURRENCY_LATEST_DATA
+} from "./actionTypes"
 import axios from "axios"
 
 // function for fomatting JS object
@@ -18,21 +21,43 @@ const today = formatDate(new Date())
 const monthAgo = formatDate(new Date(), 2)
 
 // Currency api url
-const apiURL = `https://api.exchangeratesapi.io/history?start_at=${monthAgo}&end_at=${today}&base=AUD&symbols=JPY`
+const apiLatestDataURL = `https://api.exchangeratesapi.io/latest?base=AUD`
 
-export const fetchData = data => {
+const apiHistoricalDataURL = `https://api.exchangeratesapi.io/history?start_at=${monthAgo}&end_at=${today}&base=AUD&symbols=JPY`
+
+export const fetchLatestData = data => {
   return {
-    type: FETCH_CURRENCY_HISTORICAL_DATA,
-    data: data
+    type: FETCH_CURRENCY_LATEST_DATA,
+    latestData: data
   }
 }
 
-export const fetchCurrencyData = () => {
+export const fetchCurrencyLatestData = () => {
   return dispatch => {
     return axios
-      .get(apiURL)
+      .get(apiLatestDataURL)
       .then(response => {
-        dispatch(fetchData(response.data.rates))
+        dispatch(fetchLatestData(response.data.rates))
+      })
+      .catch(error => {
+        throw error
+      })
+  }
+}
+
+export const fetcHistoricalhData = data => {
+  return {
+    type: FETCH_CURRENCY_HISTORICAL_DATA,
+    historicalData: data
+  }
+}
+
+export const fetchCurrencyHistoricalData = () => {
+  return dispatch => {
+    return axios
+      .get(apiHistoricalDataURL)
+      .then(response => {
+        dispatch(fetcHistoricalhData(response.data.rates))
       })
       .catch(error => {
         throw error

@@ -1,2 +1,5 @@
-export { fetchCurrencyData } from "./currencies"
+export {
+  fetchCurrencyHistoricalData,
+  fetchCurrencyLatestData
+} from "./currencies"
 export { toggelCalculator } from "./calculator"

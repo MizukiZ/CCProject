@@ -8,7 +8,7 @@
 
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { fetchCurrencyData } from "./src/store/actions/index"
+import { fetchCurrencyHistoricalData } from "./src/store/actions/index"
 import DeviceInfo from "react-native-device-info"
 
 // native base component
@@ -53,7 +53,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchCurrencyData: () => dispatch(fetchCurrencyData())
+    onFetchCurrencyHistoricalData: () => dispatch(fetchCurrencyHistoricalData())
   }
 }
 

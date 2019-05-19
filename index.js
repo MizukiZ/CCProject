@@ -8,11 +8,17 @@ import App from "./App"
 import { name as appName } from "./app.json"
 import { Provider } from "react-redux"
 import configureStore from "./src/store/configureStore"
-import { fetchCurrencyData } from "./src/store/actions/currencies"
+import {
+  fetchCurrencyHistoricalData,
+  fetchCurrencyLatestData
+} from "./src/store/actions/index"
 
 const store = configureStore()
+
+// fetch latest currency data
+store.dispatch(fetchCurrencyLatestData())
 // fetch historycal currency data
-store.dispatch(fetchCurrencyData())
+store.dispatch(fetchCurrencyHistoricalData())
 
 // warpping by RNRRedux element to pass store
 const RNRedux = () => (
