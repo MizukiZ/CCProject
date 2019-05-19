@@ -10,12 +10,13 @@ import React, { Component } from "react"
 import { Platform, StyleSheet, Text, View } from "react-native"
 import { connect } from "react-redux"
 import { fetchCurrencyData } from "./src/store/actions/index"
+import DeviceInfo from "react-native-device-info"
 
 class App extends Component<Props> {
   render() {
     return (
-      <View>
-        <Text>CC app</Text>
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Text>{DeviceInfo.getUniqueID()}</Text>
       </View>
     )
   }
