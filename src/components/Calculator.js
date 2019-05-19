@@ -22,7 +22,7 @@ class CCCalculator extends Component {
                 }}
                 width={300}
                 height={450}
-                calcButtonBackgroundColor="#00e9ff"
+                borderColor="#000"
               />
             </Row>
 
