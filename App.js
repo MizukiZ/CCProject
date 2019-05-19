@@ -7,22 +7,39 @@
  */
 
 import React, { Component } from "react"
-import { Platform, StyleSheet, Text, View } from "react-native"
 import { connect } from "react-redux"
 import { fetchCurrencyData } from "./src/store/actions/index"
 import DeviceInfo from "react-native-device-info"
 
+// native base component
+import {
+  Container,
+  Content,
+  Button,
+  Left,
+  Right,
+  Body,
+  Icon,
+  Text
+} from "native-base"
+
+// import components
+import CCFooter from "./src/components/Footer"
+import CCHeader from "./src/components/Header"
+
 class App extends Component<Props> {
   render() {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>{DeviceInfo.getUniqueID()}</Text>
-      </View>
+      <Container>
+        <CCHeader />
+        <Content>
+          <Text>Your Device ID is : {DeviceInfo.getUniqueID()}</Text>
+        </Content>
+        <CCFooter />
+      </Container>
     )
   }
 }
-
-const styles = StyleSheet.create({})
 
 const mapStateToProps = state => {
   return {
