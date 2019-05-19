@@ -27,6 +27,7 @@ import {
 import CCFooter from "./src/components/Footer"
 import CCHeader from "./src/components/Header"
 import CCCalculator from "./src/components/Calculator"
+import CurrencyCard from "./src/components/CurrencyCard"
 
 class App extends Component<Props> {
   render() {
@@ -35,7 +36,8 @@ class App extends Component<Props> {
         <CCCalculator />
         <CCHeader />
         <Content>
-          <Text>Your Device ID is : {DeviceInfo.getUniqueID()}</Text>
+          {/* <Text>Your Device ID is : {DeviceInfo.getUniqueID()}</Text>  */}
+          <CurrencyCard currency="AUD" />
         </Content>
         <CCFooter />
       </Container>
