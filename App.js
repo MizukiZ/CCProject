@@ -26,11 +26,13 @@ import {
 // import components
 import CCFooter from "./src/components/Footer"
 import CCHeader from "./src/components/Header"
+import CCCalculator from "./src/components/Calculator"
 
 class App extends Component<Props> {
   render() {
     return (
       <Container>
+        <CCCalculator />
         <CCHeader />
         <Content>
           <Text>Your Device ID is : {DeviceInfo.getUniqueID()}</Text>
