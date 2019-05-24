@@ -3,12 +3,12 @@ import {
   FETCH_CURRENCY_LATEST_DATA
 } from "../actions/actionTypes"
 
-initialState = {
+initialCurrencyState = {
   latestData: [],
   historicalData: []
 }
 
-export default function currencyReducer(state = initialState, action) {
+export default function currencyReducer(state = initialCurrencyState, action) {
   switch (action.type) {
     case FETCH_CURRENCY_LATEST_DATA:
       return {

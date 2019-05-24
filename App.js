@@ -30,7 +30,7 @@ import CCCalculator from "./src/components/Calculator"
 import CurrencyCard from "./src/components/CurrencyCard"
 class App extends Component<Props> {
   render() {
-    console.log(10 ** 2)
+    console.log(this.props.setting)
     return (
       <Container>
         <CCCalculator />
@@ -47,7 +47,8 @@ class App extends Component<Props> {
 
 const mapStateToProps = state => {
   return {
-    currency: state.currency
+    currency: state.currency,
+    setting: state.setting
   }
 }
 

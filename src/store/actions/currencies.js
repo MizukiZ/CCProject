@@ -20,11 +20,6 @@ const today = formatDate(new Date())
 // date of 2nd params months ago from tody
 const monthAgo = formatDate(new Date(), 2)
 
-// Currency api url
-const apiLatestDataURL = `https://api.exchangeratesapi.io/latest?base=AUD`
-
-const apiHistoricalDataURL = `https://api.exchangeratesapi.io/history?start_at=${monthAgo}&end_at=${today}&base=AUD&symbols=JPY`
-
 export const fetchLatestData = data => {
   return {
     type: FETCH_CURRENCY_LATEST_DATA,
@@ -32,7 +27,10 @@ export const fetchLatestData = data => {
   }
 }
 
-export const fetchCurrencyLatestData = () => {
+export const fetchCurrencyLatestData = baseCurrency => {
+  // Currency api url
+  const apiLatestDataURL = `https://api.exchangeratesapi.io/latest?base=${baseCurrency}`
+
   return dispatch => {
     return axios
       .get(apiLatestDataURL)
@@ -52,7 +50,10 @@ export const fetcHistoricalhData = data => {
   }
 }
 
-export const fetchCurrencyHistoricalData = () => {
+export const fetchCurrencyHistoricalData = (baseCurrency, otherCurrency) => {
+  // Currency api url
+  const apiHistoricalDataURL = `https://api.exchangeratesapi.io/history?start_at=${monthAgo}&end_at=${today}&base=${baseCurrency}&symbols=${otherCurrency}`
+
   return dispatch => {
     return axios
       .get(apiHistoricalDataURL)

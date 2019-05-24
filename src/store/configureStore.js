@@ -5,10 +5,12 @@ import logger from "redux-logger"
 // import reducers
 import currencyReducer from "./reducers/currencyReducer"
 import calculatorReducer from "./reducers/calculatorReducer"
+import settingReducer from "./reducers/settingReducer"
 
 const rootReducer = combineReducers({
   currency: currencyReducer,
-  calculator: calculatorReducer
+  calculator: calculatorReducer,
+  setting: settingReducer
 })
 
 const configureStore = () => {
