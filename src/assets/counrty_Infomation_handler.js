@@ -59,10 +59,10 @@ const CountryInfomation = {
   },
   EUR: {
     flag: require("./country_flags/EUR.png"),
-    countryName: countryName("EUR"),
+    countryName: countryName("EUR", "EU"),
     currencyName: currencyName("EUR"),
     currencySymbol: currencySymbol("EUR"),
-    countryEmoji: countryEmoji("EUR")
+    countryEmoji: countryEmoji("EUR", "EU")
   },
   GBP: {
     flag: require("./country_flags/GBP.png"),
