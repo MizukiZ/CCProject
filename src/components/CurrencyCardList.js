@@ -9,6 +9,7 @@ import CountryInfo from "../assets/counrty_Infomation_handler"
 
 class CurrencyCardList extends Component {
   render() {
+    console.log(CountryInfo)
     return (
       <Fragment>
         <Grid>
@@ -41,37 +42,26 @@ class CurrencyCardList extends Component {
           </Row>
         </Grid>
 
-        <Form>
+        {/* <Form>
           <Picker
             mode="dropdown"
-            headerBackButtonText="Baaack!"
+            headerBackButtonText="Please Select A Currency"
             onValueChange={e => {
               console.log(e)
             }}
           >
-            <Picker.Item
-              label={`AUD ${CountryInfo["AUD"].countryEmoji}`}
-              value="key0"
-            />
-            <Picker.Item label="ATM Card" value="key1" />
-            <Picker.Item label="Debit Card" value="key2" />
-            <Picker.Item label="Credit Card" value="key3" />
-            <Picker.Item label="Net Banking" value="key4" />
-            <Picker.Item label="Net Banking" value="key4" />
-            <Picker.Item label="Net Banking" value="key4" />
-            <Picker.Item label="Net Banking" value="key4" />
-            <Picker.Item label="Net Banking" value="key4" />
-            <Picker.Item label="Net Banking" value="key4" />
-            <Picker.Item label="Net Banking" value="key4" />
-            <Picker.Item label="Net Banking" value="key4" />
-            <Picker.Item label="Net Banking" value="key4" />
-            <Picker.Item label="Net Banking" value="key4" />
-            <Picker.Item label="Net Banking" value="key4" />
-            <Picker.Item label="Net Banking" value="key4" />
-            <Picker.Item label="Net Banking" value="key4" />
-            <Picker.Item label="Net Banking" value="key4" />
+            {Object.keys(CountryInfo).map(currency => {
+              return (
+                <Picker.Item
+                  label={`${CountryInfo[currency].countryEmoji} ${
+                    CountryInfo[currency].currencyName
+                  }`}
+                  value={currency}
+                />
+              )
+            })}
           </Picker>
-        </Form>
+        </Form> */}
       </Fragment>
     )
   }

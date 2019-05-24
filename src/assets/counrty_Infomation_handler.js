@@ -124,8 +124,8 @@ const CountryInfomation = {
     flag: require("./country_flags/JPY.png"),
     countryName: countryName("JPY"),
     currencyName: currencyName("JPY"),
-    currencySymbol: countryEmoji("JPY"),
-    countryEmoji: currencySymbol("JPY")
+    currencySymbol: currencySymbol("JPY"),
+    countryEmoji: countryEmoji("JPY")
   },
   KRW: {
     flag: require("./country_flags/KRW.png"),
@@ -220,10 +220,10 @@ const CountryInfomation = {
   },
   USD: {
     flag: require("./country_flags/USD.png"),
-    countryName: countryName("USD"),
+    countryName: countryName("USD", "US"),
     currencyName: currencyName("USD"),
     currencySymbol: currencySymbol("USD"),
-    countryEmoji: countryEmoji("USD")
+    countryEmoji: countryEmoji("USD", "US")
   },
   ZAR: {
     flag: require("./country_flags/ZAR.png"),
@@ -234,8 +234,12 @@ const CountryInfomation = {
   }
 }
 
-function countryName(code) {
-  return lookup.countries({ currencies: code })[0].name
+function countryName(code, alpha = null) {
+  if (alpha) {
+    return lookup.countries({ alpha2: alpha })[0].name
+  } else {
+    return lookup.countries({ currencies: code })[0].name
+  }
 }
 
 function currencyName(code) {
@@ -246,8 +250,12 @@ function currencySymbol(code) {
   return lookup.currencies({ code: code })[0].symbol
 }
 
-function countryEmoji(code) {
-  return lookup.countries({ currencies: code })[0].emoji
+function countryEmoji(code, alpha = null) {
+  if (alpha) {
+    return lookup.countries({ alpha2: alpha })[0].emoji
+  } else {
+    return lookup.countries({ currencies: code })[0].emoji
+  }
 }
 
 export default CountryInfomation
