@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "156560561015",
+    "firebase_url": "https://ccproject-adfaf.firebaseio.com",
+    "project_id": "ccproject-adfaf",
+    "storage_bucket": "ccproject-adfaf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156560561015:android:76dfa16bec666669",
+        "android_client_info": {
+          "package_name": "com.cc_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156560561015-d0mts8fco7h6rb6kjp1bm7caf58hvjea.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7NKt8VPnvkZGUvu_NqsLSpUV7hLoxq74"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156560561015-d0mts8fco7h6rb6kjp1bm7caf58hvjea.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

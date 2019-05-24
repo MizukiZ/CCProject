@@ -28,9 +28,10 @@ import CCFooter from "./src/components/Footer"
 import CCHeader from "./src/components/Header"
 import CCCalculator from "./src/components/Calculator"
 import CurrencyCard from "./src/components/CurrencyCard"
+
+import firebase from "react-native-firebase"
 class App extends Component<Props> {
   render() {
-    console.log(this.props.setting)
     return (
       <Container>
         <CCCalculator />
