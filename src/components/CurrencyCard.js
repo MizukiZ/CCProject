@@ -23,12 +23,18 @@ class CurrencyCard extends Component {
     const { currencyCode, currencyData } = this.props
 
     return (
-      <Content>
+      <Content style={{ margin: 5 }}>
         <SwipeRow
-          leftOpenValue={60}
+          style={{ margin: -9 }}
+          disableLeftSwipe
+          leftOpenValue={80}
           left={
-            <Button success onPress={() => alert("Add")}>
-              <Icon active name="add" />
+            <Button danger iconLeft onPress={() => alert("Delete")}>
+              <Icon
+                type="FontAwesome"
+                name="trash"
+                style={{ fontSize: 30, color: "black" }}
+              />
             </Button>
           }
           body={
@@ -43,7 +49,7 @@ class CurrencyCard extends Component {
                           source={CountryInfo[currencyCode].flag}
                         />
                       </Col>
-                      <Col size={35}>
+                      <Col size={40}>
                         <Row>
                           <Text>{currencyCode}</Text>
                         </Row>
@@ -60,9 +66,6 @@ class CurrencyCard extends Component {
                             4
                           )} ${CountryInfo[currencyCode].currencySymbol}`}
                         </Text>
-                      </Col>
-                      <Col size={5}>
-                        <Icon name="arrow-forward" />
                       </Col>
                     </Row>
                   </Grid>
