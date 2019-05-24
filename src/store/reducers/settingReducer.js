@@ -8,7 +8,8 @@ import {
 initialSettingState = {
   baseCurrency: "JPY",
   autoConvertionHistorySave: true,
-  autoLocation: false
+  autoLocation: false,
+  displayCurrency: []
 }
 
 export default function settingReducer(state = initialSettingState, action) {

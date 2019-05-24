@@ -38,7 +38,6 @@ export const fetchDeviceSettings = settings => {
 export const fechDeviceSettingsFromFirebase = () => {
   // get unique device id
   deviceID = DeviceInfo.getUniqueID()
-
   return dispatch => {
     return firebase
       .database()
@@ -64,6 +63,18 @@ export const fechDeviceSettingsFromFirebase = () => {
               displayCurrency
             })
           )
+        } else {
+          // if there is no setting for the device then create setting with default values
+
+          firebase
+            .database()
+            .ref("/settings/" + deviceID)
+            .set({
+              baseCurrency: "AUD",
+              convertionHistorySave: true,
+              autoLocation: false,
+              displayCurrency: { 0: "JPY" }
+            })
         }
       })
       .catch(error => {

@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { StyleSheet } from "react-native"
 import {
+  Content,
   Card,
   CardItem,
   Text,
@@ -20,38 +21,40 @@ class CurrencyCard extends Component {
     const { currencyCode, currencyData } = this.props
 
     return (
-      <Card>
-        <CardItem>
-          <Grid>
-            <Row style={{ alignItems: "center" }}>
-              <Col size={25}>
-                <Thumbnail square source={CountryInfo[currencyCode].flag} />
-              </Col>
-              <Col size={35}>
-                <Row>
-                  <Text>{currencyCode}</Text>
-                </Row>
-                <Row>
-                  <Text style={styles.currencyNameStyle}>
-                    {CountryInfo[currencyCode].currencyName}
+      <Content>
+        <Card>
+          <CardItem>
+            <Grid>
+              <Row style={{ alignItems: "center" }}>
+                <Col size={25}>
+                  <Thumbnail square source={CountryInfo[currencyCode].flag} />
+                </Col>
+                <Col size={35}>
+                  <Row>
+                    <Text>{currencyCode}</Text>
+                  </Row>
+                  <Row>
+                    <Text style={styles.currencyNameStyle}>
+                      {CountryInfo[currencyCode].currencyName}
+                    </Text>
+                  </Row>
+                </Col>
+                <Col size={35} style={{ alignItems: "center" }}>
+                  <Text style={styles.currencyRateStyle}>
+                    {`${roundWithDecimalPoint(
+                      currencyData.latestData[currencyCode],
+                      4
+                    )} ${CountryInfo[currencyCode].currencySymbol}`}
                   </Text>
-                </Row>
-              </Col>
-              <Col size={35} style={{ alignItems: "center" }}>
-                <Text style={styles.currencyRateStyle}>
-                  {`${roundWithDecimalPoint(
-                    currencyData.latestData[currencyCode],
-                    4
-                  )} ${CountryInfo[currencyCode].currencySymbol}`}
-                </Text>
-              </Col>
-              <Col size={5}>
-                <Icon name="arrow-forward" />
-              </Col>
-            </Row>
-          </Grid>
-        </CardItem>
-      </Card>
+                </Col>
+                <Col size={5}>
+                  <Icon name="arrow-forward" />
+                </Col>
+              </Row>
+            </Grid>
+          </CardItem>
+        </Card>
+      </Content>
     )
   }
 }
