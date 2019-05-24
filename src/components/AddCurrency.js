@@ -7,7 +7,11 @@ import ModalSelector from "react-native-modal-selector"
 
 class AddCurrency extends Component {
   render() {
-    let data = Object.keys(CountryInfo).map((currency, i) => {
+    const avaliableCurrencyList = Object.keys(CountryInfo).filter(currency => {
+      // remove used currencies
+      return !this.props.displayCurrency.includes(currency)
+    })
+    let data = avaliableCurrencyList.map((currency, i) => {
       return {
         key: i,
         label: `${CountryInfo[currency].countryEmoji} ${
@@ -38,7 +42,12 @@ class AddCurrency extends Component {
   }
 }
 
-const mapStateToProps = null
+const mapStateToProps = state => {
+  return {
+    displayCurrency: state.setting.displayCurrency
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     onAddCurrency: currencyCode => dispatch(addCurrency(currencyCode))
