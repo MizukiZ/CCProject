@@ -51,7 +51,8 @@ export const fechDeviceSettingsFromFirebase = () => {
           const {
             baseCurrency,
             convertionHistorySave,
-            autoLocation
+            autoLocation,
+            displayCurrency
           } = snapshot.val()
 
           // dispatch the mothod to update state
@@ -59,7 +60,8 @@ export const fechDeviceSettingsFromFirebase = () => {
             fetchDeviceSettings({
               baseCurrency,
               convertionHistorySave,
-              autoLocation
+              autoLocation,
+              displayCurrency
             })
           )
         }
