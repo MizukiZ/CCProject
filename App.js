@@ -37,7 +37,7 @@ class App extends Component<Props> {
         <CCHeader />
         <Content>
           {/* <Text>Your Device ID is : {DeviceInfo.getUniqueID()}</Text>  */}
-          <CurrencyCard currency="JPY" />
+          <CurrencyCard currencyCode="JPY" />
         </Content>
         <CCFooter />
       </Container>

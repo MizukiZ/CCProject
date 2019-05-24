@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-
+import { StyleSheet } from "react-native"
 import {
   Card,
   CardItem,
@@ -17,7 +17,7 @@ import { roundWithDecimalPoint } from "../helpers/caluculate"
 
 class CurrencyCard extends Component {
   render() {
-    const { currency, currencyData } = this.props
+    const { currencyCode, currencyData } = this.props
 
     return (
       <Card>
@@ -25,19 +25,24 @@ class CurrencyCard extends Component {
           <Grid>
             <Row style={{ alignItems: "center" }}>
               <Col size={25}>
-                <Thumbnail square source={CountryInfo[currency].flag} />
+                <Thumbnail square source={CountryInfo[currencyCode].flag} />
               </Col>
               <Col size={35}>
                 <Row>
-                  <Text>{currency}</Text>
+                  <Text>{currencyCode}</Text>
                 </Row>
                 <Row>
-                  <Text>{CountryInfo[currency].currencyName}</Text>
+                  <Text style={styles.currencyNameStyle}>
+                    {CountryInfo[currencyCode].currencyName}
+                  </Text>
                 </Row>
               </Col>
               <Col size={35} style={{ alignItems: "center" }}>
-                <Text>
-                  {roundWithDecimalPoint(currencyData.latestData[currency], 4)}
+                <Text style={styles.currencyRateStyle}>
+                  {`${roundWithDecimalPoint(
+                    currencyData.latestData[currencyCode],
+                    4
+                  )} ${CountryInfo[currencyCode].currencySymbol}`}
                 </Text>
               </Col>
               <Col size={5}>
@@ -50,6 +55,15 @@ class CurrencyCard extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  currencyNameStyle: {
+    color: "grey"
+  },
+  currencyRateStyle: {
+    fontWeight: "bold"
+  }
+})
 
 const mapStateToProps = state => {
   return {
