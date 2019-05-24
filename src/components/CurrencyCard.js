@@ -9,7 +9,9 @@ import {
   Icon,
   Right,
   Button,
-  Thumbnail
+  Thumbnail,
+  SwipeRow,
+  View
 } from "native-base"
 import { Grid, Row, Col } from "react-native-easy-grid"
 
@@ -22,38 +24,53 @@ class CurrencyCard extends Component {
 
     return (
       <Content>
-        <Card>
-          <CardItem>
-            <Grid>
-              <Row style={{ alignItems: "center" }}>
-                <Col size={25}>
-                  <Thumbnail square source={CountryInfo[currencyCode].flag} />
-                </Col>
-                <Col size={35}>
-                  <Row>
-                    <Text>{currencyCode}</Text>
-                  </Row>
-                  <Row>
-                    <Text style={styles.currencyNameStyle}>
-                      {CountryInfo[currencyCode].currencyName}
-                    </Text>
-                  </Row>
-                </Col>
-                <Col size={35} style={{ alignItems: "center" }}>
-                  <Text style={styles.currencyRateStyle}>
-                    {`${roundWithDecimalPoint(
-                      currencyData.latestData[currencyCode],
-                      4
-                    )} ${CountryInfo[currencyCode].currencySymbol}`}
-                  </Text>
-                </Col>
-                <Col size={5}>
-                  <Icon name="arrow-forward" />
-                </Col>
-              </Row>
-            </Grid>
-          </CardItem>
-        </Card>
+        <SwipeRow
+          leftOpenValue={60}
+          left={
+            <Button success onPress={() => alert("Add")}>
+              <Icon active name="add" />
+            </Button>
+          }
+          body={
+            <Content>
+              <Card>
+                <CardItem>
+                  <Grid>
+                    <Row style={{ alignItems: "center" }}>
+                      <Col size={25}>
+                        <Thumbnail
+                          square
+                          source={CountryInfo[currencyCode].flag}
+                        />
+                      </Col>
+                      <Col size={35}>
+                        <Row>
+                          <Text>{currencyCode}</Text>
+                        </Row>
+                        <Row>
+                          <Text style={styles.currencyNameStyle}>
+                            {CountryInfo[currencyCode].currencyName}
+                          </Text>
+                        </Row>
+                      </Col>
+                      <Col size={35} style={{ alignItems: "center" }}>
+                        <Text style={styles.currencyRateStyle}>
+                          {`${roundWithDecimalPoint(
+                            currencyData.latestData[currencyCode],
+                            4
+                          )} ${CountryInfo[currencyCode].currencySymbol}`}
+                        </Text>
+                      </Col>
+                      <Col size={5}>
+                        <Icon name="arrow-forward" />
+                      </Col>
+                    </Row>
+                  </Grid>
+                </CardItem>
+              </Card>
+            </Content>
+          }
+        />
       </Content>
     )
   }
