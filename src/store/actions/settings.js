@@ -2,7 +2,8 @@ import {
   CHANGE_AUTO_CONVERTION_HISTORY_SAVE,
   CHANGE_AUTO_LOCATION,
   CHANGE_BASE_CURRENCY,
-  FETCH_DEVICE_SETTING
+  FETCH_DEVICE_SETTING,
+  ADD_CURRENCY
 } from "./actionTypes"
 import DeviceInfo from "react-native-device-info"
 import firebase from "react-native-firebase"
@@ -80,5 +81,12 @@ export const fechDeviceSettingsFromFirebase = () => {
       .catch(error => {
         throw error
       })
+  }
+}
+
+export const addCurrency = code => {
+  return {
+    type: ADD_CURRENCY,
+    currencyCode: code
   }
 }

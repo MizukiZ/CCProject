@@ -2,7 +2,8 @@ import {
   CHANGE_BASE_CURRENCY,
   CHANGE_AUTO_CONVERTION_HISTORY_SAVE,
   CHANGE_AUTO_LOCATION,
-  FETCH_DEVICE_SETTING
+  FETCH_DEVICE_SETTING,
+  ADD_CURRENCY
 } from "../actions/actionTypes"
 
 initialSettingState = {
@@ -30,6 +31,11 @@ export default function settingReducer(state = initialSettingState, action) {
       return {
         ...state,
         autoLocation: action.flag
+      }
+    case ADD_CURRENCY:
+      return {
+        ...state,
+        displayCurrency: state.displayCurrency.concat(action.currencyCode)
       }
     default:
       return state

@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import CurrencyCard from "./CurrencyCard"
 import { Grid, Row, Col } from "react-native-easy-grid"
 
+import { addCurrency } from "../store/actions/index"
 class CurrencyCardList extends Component {
   render() {
     return (
@@ -11,7 +12,7 @@ class CurrencyCardList extends Component {
         <Grid>
           {this.props.setting.displayCurrency.map(currencyCode => {
             return (
-              <Row>
+              <Row key={`card-${currencyCode}`}>
                 <CurrencyCard
                   key={`card-${currencyCode}`}
                   currencyCode={currencyCode}
@@ -20,7 +21,14 @@ class CurrencyCardList extends Component {
             )
           })}
           <Row style={{ justifyContent: "center", marginTop: 20 }}>
-            <Button bordered primary>
+            <Button
+              bordered
+              primary
+              onPress={() => {
+                console.log("Add currency!!")
+                this.props.onAddCurrency("USD")
+              }}
+            >
               <Icon
                 type="FontAwesome"
                 name="money"
@@ -41,4 +49,13 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(CurrencyCardList)
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddCurrency: currencyCode => dispatch(addCurrency(currencyCode))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CurrencyCardList)
