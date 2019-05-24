@@ -12,7 +12,8 @@ import {
 } from "native-base"
 import { Grid, Row, Col } from "react-native-easy-grid"
 
-import FlagImages from "../assets/flag_handler"
+import CountryInfo from "../assets/counrty_Infomation_handler"
+import { roundWithDecimalPoint } from "../helpers/caluculate"
 
 class CurrencyCard extends Component {
   render() {
@@ -24,13 +25,20 @@ class CurrencyCard extends Component {
           <Grid>
             <Row style={{ alignItems: "center" }}>
               <Col size={25}>
-                <Thumbnail square source={FlagImages[currency]} />
+                <Thumbnail square source={CountryInfo[currency].flag} />
               </Col>
-              <Col size={15}>
-                <Text>{currency}</Text>
+              <Col size={35}>
+                <Row>
+                  <Text>{currency}</Text>
+                </Row>
+                <Row>
+                  <Text>{CountryInfo[currency].currencyName}</Text>
+                </Row>
               </Col>
-              <Col size={55}>
-                <Text>{currencyData.latestData[currency]}</Text>
+              <Col size={35} style={{ alignItems: "center" }}>
+                <Text>
+                  {roundWithDecimalPoint(currencyData.latestData[currency], 4)}
+                </Text>
               </Col>
               <Col size={5}>
                 <Icon name="arrow-forward" />

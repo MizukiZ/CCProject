@@ -28,9 +28,9 @@ import CCFooter from "./src/components/Footer"
 import CCHeader from "./src/components/Header"
 import CCCalculator from "./src/components/Calculator"
 import CurrencyCard from "./src/components/CurrencyCard"
-
 class App extends Component<Props> {
   render() {
+    console.log(10 ** 2)
     return (
       <Container>
         <CCCalculator />
