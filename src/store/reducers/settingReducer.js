@@ -1,17 +1,20 @@
 import {
   CHANGE_BASE_CURRENCY,
   CHANGE_AUTO_CONVERTION_HISTORY_SAVE,
-  CHANGE_AUTO_LOCATION
+  CHANGE_AUTO_LOCATION,
+  FETCH_DEVICE_SETTING
 } from "../actions/actionTypes"
 
 initialSettingState = {
-  baseCurrency: "AUD",
+  baseCurrency: "JPY",
   autoConvertionHistorySave: true,
   autoLocation: false
 }
 
 export default function settingReducer(state = initialSettingState, action) {
   switch (action.type) {
+    case FETCH_DEVICE_SETTING:
+      return action.settings
     case CHANGE_BASE_CURRENCY:
       return {
         ...state,

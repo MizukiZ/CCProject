@@ -11,11 +11,15 @@ import configureStore from "./src/store/configureStore"
 
 import {
   fetchCurrencyHistoricalData,
-  fetchCurrencyLatestData
+  fetchCurrencyLatestData,
+  fechDeviceSettingsFromFirebase
 } from "./src/store/actions/index"
 
+fechDeviceSettingsFromFirebase()
 const store = configureStore()
 
+// fetch device settings if there is,
+store.dispatch(fechDeviceSettingsFromFirebase())
 // fetch latest currency data
 store.dispatch(fetchCurrencyLatestData("AUD"))
 // fetch historycal currency data

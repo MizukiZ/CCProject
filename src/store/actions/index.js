@@ -6,5 +6,6 @@ export { toggelCalculator } from "./calculator"
 export {
   changeBaseCurrency,
   changeAutoConvertionHistorySave,
-  changeAutoLocation
+  changeAutoLocation,
+  fechDeviceSettingsFromFirebase
 } from "./settings"
