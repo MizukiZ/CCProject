@@ -12,20 +12,26 @@ import { fetchCurrencyHistoricalData } from "./src/store/actions/index"
 import DeviceInfo from "react-native-device-info"
 
 // native base component
-import { Container, Content } from "native-base"
+import { Container, Content, Thumbnail } from "native-base"
 
 // import components
 import CCFooter from "./src/components/Footer"
 import CCHeader from "./src/components/Header"
 import CCCalculator from "./src/components/Calculator"
 import CurrencyCardList from "./src/components/CurrencyCardList"
+import BaseCurrency from "./src/components/BaseCurrency"
 
 class App extends Component<Props> {
+  static navigationOptions = ({ navigation }) => ({
+    title: "Dashborad",
+    headerRight: <BaseCurrency />
+  })
+
   render() {
     return (
       <Container>
         <CCCalculator />
-        <CCHeader />
+        {/* <CCHeader /> */}
         <Content>
           <CurrencyCardList navigationObject={this.props.navigation} />
         </Content>
