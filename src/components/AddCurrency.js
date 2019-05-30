@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Button, Icon, Text } from "native-base"
 import { connect } from "react-redux"
-import { addCurrency } from "../store/actions/index"
+import { addCurrencyFromFirebase } from "../store/actions/index"
 import CountryInfo from "../assets/counrty_Infomation_handler"
 import ModalSelector from "react-native-modal-selector"
 
@@ -26,7 +26,9 @@ class AddCurrency extends Component {
         data={data}
         cancelButtonAccessibilityLabel={"Cancel Button"}
         onChange={option => {
-          this.props.onAddCurrency(option.customKey)
+          this.props.onAddCurrency(option.customKey, [
+            ...this.props.displayCurrency
+          ])
         }}
       >
         <Button bordered primary>
@@ -50,7 +52,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddCurrency: currencyCode => dispatch(addCurrency(currencyCode))
+    onAddCurrency: (currencyCode, originalList) =>
+      dispatch(addCurrencyFromFirebase(currencyCode, originalList))
   }
 }
 

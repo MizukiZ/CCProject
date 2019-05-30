@@ -17,7 +17,7 @@ import { Grid, Row, Col } from "react-native-easy-grid"
 
 import CountryInfo from "../assets/counrty_Infomation_handler"
 import { roundWithDecimalPoint } from "../helpers/caluculate"
-import { deleteCurrency } from "../store/actions/index"
+import { deleteCurrencyFromFirebase } from "../store/actions/index"
 
 class CurrencyCard extends Component {
   render() {
@@ -34,7 +34,9 @@ class CurrencyCard extends Component {
             <Button
               danger
               onPress={() => {
-                this.props.onDeleteCurrency(currencyCode)
+                this.props.onDeleteCurrency(currencyCode, [
+                  ...this.props.displayCurrency
+                ])
               }}
             >
               <Icon
@@ -97,13 +99,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    currencyData: state.currency
+    currencyData: state.currency,
+    displayCurrency: state.setting.displayCurrency
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onDeleteCurrency: currencyCode => dispatch(deleteCurrency(currencyCode))
+    onDeleteCurrency: (currencyCode, originalList) =>
+      dispatch(deleteCurrencyFromFirebase(currencyCode, originalList))
   }
 }
 

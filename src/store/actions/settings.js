@@ -98,3 +98,50 @@ export const deleteCurrency = code => {
     currencyCode: code
   }
 }
+
+export const addCurrencyFromFirebase = (code, originalList) => {
+  // create a hash format data to send to firebase
+  originalList.push(code)
+  sendData = {}
+  originalList.forEach((currency, i) => {
+    sendData[i] = currency
+  })
+  return dispatch => {
+    return firebase
+      .database()
+      .ref("/settings/" + deviceID)
+      .update({ displayCurrency: sendData })
+      .then(function(snapshot) {
+        // update redux aswell
+        dispatch(addCurrency(code))
+      })
+      .catch(error => {
+        throw error
+      })
+  }
+}
+
+export const deleteCurrencyFromFirebase = (code, originalList) => {
+  // create a hash format data to send to firebase
+  sendData = {}
+  originalList
+    .filter(c => c != code)
+    .forEach((currency, i) => {
+      sendData[i] = currency
+    })
+
+  console.log("SendData:" + JSON.stringify(sendData))
+  return dispatch => {
+    return firebase
+      .database()
+      .ref("/settings/" + deviceID)
+      .update({ displayCurrency: sendData })
+      .then(function(snapshot) {
+        // update redux aswell
+        dispatch(deleteCurrency(code))
+      })
+      .catch(error => {
+        throw error
+      })
+  }
+}
