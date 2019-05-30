@@ -21,7 +21,7 @@ class CCCalculator extends Component {
                   justifyContent: "center"
                 }}
                 width={300}
-                height={450}
+                height={400}
                 borderColor="#000"
               />
             </Row>
