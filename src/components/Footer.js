@@ -15,14 +15,22 @@ class CCFooter extends Component {
               style={{ fontSize: 40, color: "black" }}
             />
           </Button>
-          <Button>
+          <Button
+            onPress={() => {
+              this.props.navigationObject.push("History")
+            }}
+          >
             <Icon
               type="FontAwesome"
               name="history"
               style={{ fontSize: 40, color: "black" }}
             />
           </Button>
-          <Button>
+          <Button
+            onPress={() => {
+              this.props.navigationObject.push("Setting")
+            }}
+          >
             <Icon
               type="FontAwesome"
               name="cogs"

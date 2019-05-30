@@ -15,6 +15,7 @@ class CurrencyCardList extends Component {
               <Row key={`card-${currencyCode}`}>
                 <CurrencyCard
                   key={`card-${currencyCode}`}
+                  navigationObject={this.props.navigationObject}
                   currencyCode={currencyCode}
                 />
               </Row>

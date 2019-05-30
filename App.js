@@ -12,16 +12,7 @@ import { fetchCurrencyHistoricalData } from "./src/store/actions/index"
 import DeviceInfo from "react-native-device-info"
 
 // native base component
-import {
-  Container,
-  Content,
-  Button,
-  Left,
-  Right,
-  Body,
-  Icon,
-  Text
-} from "native-base"
+import { Container, Content } from "native-base"
 
 // import components
 import CCFooter from "./src/components/Footer"
@@ -36,9 +27,9 @@ class App extends Component<Props> {
         <CCCalculator />
         <CCHeader />
         <Content>
-          <CurrencyCardList />
+          <CurrencyCardList navigationObject={this.props.navigation} />
         </Content>
-        <CCFooter />
+        <CCFooter navigationObject={this.props.navigation} />
       </Container>
     )
   }
