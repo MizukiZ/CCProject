@@ -17,6 +17,7 @@ import { Grid, Row, Col } from "react-native-easy-grid"
 
 import CountryInfo from "../assets/counrty_Infomation_handler"
 import { roundWithDecimalPoint } from "../helpers/caluculate"
+import { deleteCurrency } from "../store/actions/index"
 
 class CurrencyCard extends Component {
   render() {
@@ -25,15 +26,21 @@ class CurrencyCard extends Component {
     return (
       <Content style={{ margin: 5 }}>
         <SwipeRow
+          // this mergin is needed to fill the gap between parents Content and child content
           style={{ margin: -9 }}
           disableLeftSwipe
-          leftOpenValue={80}
+          leftOpenValue={70}
           left={
-            <Button danger iconLeft onPress={() => alert("Delete")}>
+            <Button
+              danger
+              onPress={() => {
+                this.props.onDeleteCurrency(currencyCode)
+              }}
+            >
               <Icon
                 type="FontAwesome"
                 name="trash"
-                style={{ fontSize: 30, color: "black" }}
+                style={{ fontSize: 30, color: "black", marginLeft: 26 }}
               />
             </Button>
           }
@@ -94,7 +101,13 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onDeleteCurrency: currencyCode => dispatch(deleteCurrency(currencyCode))
+  }
+}
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(CurrencyCard)

@@ -8,5 +8,6 @@ export {
   changeAutoConvertionHistorySave,
   changeAutoLocation,
   fechDeviceSettingsFromFirebase,
-  addCurrency
+  addCurrency,
+  deleteCurrency
 } from "./settings"

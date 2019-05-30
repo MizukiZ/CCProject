@@ -3,7 +3,8 @@ import {
   CHANGE_AUTO_LOCATION,
   CHANGE_BASE_CURRENCY,
   FETCH_DEVICE_SETTING,
-  ADD_CURRENCY
+  ADD_CURRENCY,
+  DELETE_CURRENCY
 } from "./actionTypes"
 import DeviceInfo from "react-native-device-info"
 import firebase from "react-native-firebase"
@@ -87,6 +88,13 @@ export const fechDeviceSettingsFromFirebase = () => {
 export const addCurrency = code => {
   return {
     type: ADD_CURRENCY,
+    currencyCode: code
+  }
+}
+
+export const deleteCurrency = code => {
+  return {
+    type: DELETE_CURRENCY,
     currencyCode: code
   }
 }
