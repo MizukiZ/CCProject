@@ -23,8 +23,12 @@ import {
 
 class Setting extends Component {
   static navigationOptions = {
-    headerTitleStyle: { alignSelf: "center" },
-    title: "Setting"
+    headerTitleStyle: {
+      textAlign: "center",
+      flex: 1
+    },
+    title: "Setting",
+    headerRight: <Content />
   }
 
   state = {

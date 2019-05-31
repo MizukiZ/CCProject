@@ -23,8 +23,13 @@ import BaseCurrency from "./src/components/BaseCurrency"
 
 class App extends Component<Props> {
   static navigationOptions = ({ navigation }) => ({
+    headerTitleStyle: {
+      textAlign: "center",
+      flex: 1
+    },
     title: "Dashboard",
-    headerRight: <BaseCurrency />
+    headerRight: <BaseCurrency />,
+    headerLeft: <Content /> // need this to center title for android
   })
 
   render() {
