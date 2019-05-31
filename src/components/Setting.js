@@ -63,7 +63,8 @@ class Setting extends Component {
               <TextInput
                 style={{
                   padding: 10,
-                  fontSize: 16
+                  fontSize: 16,
+                  color: "black"
                 }}
                 editable={false}
                 value={`Base Currency: ${this.state.baseCurrencyLabel}`}
