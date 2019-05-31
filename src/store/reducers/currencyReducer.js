@@ -7,7 +7,17 @@ initialCurrencyState = {
   latestData: [],
   latestDataLoaded: false,
   historicalData: [],
-  historicalDataLoaded: false
+  historicalDataLoaded: false,
+  lastCurrencyRate: null
+}
+
+function getLastData(historicalData) {
+  const DateArray = Object.keys(historicalData)
+  const lastDate = DateArray.sort(function(a, b) {
+    return new Date(a) - new Date(b)
+  })[DateArray.length - 2]
+
+  return Object.values(historicalData[lastDate])[0]
 }
 
 export default function currencyReducer(state = initialCurrencyState, action) {
@@ -22,7 +32,8 @@ export default function currencyReducer(state = initialCurrencyState, action) {
       return {
         ...state,
         historicalData: action.historicalData,
-        historicalDataLoaded: true
+        historicalDataLoaded: true,
+        lastCurrencyRate: getLastData(action.historicalData)
       }
     default:
       return state

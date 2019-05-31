@@ -37,12 +37,7 @@ class Setting extends Component {
     autoLocation: null
   }
   render() {
-    console.log(this.state)
-    const avaliableCurrencyList = Object.keys(CountryInfo).filter(currency => {
-      // remove used currencies
-      return !this.props.setting.displayCurrency.includes(currency)
-    })
-    let data = avaliableCurrencyList.map((currency, i) => {
+    let data = Object.keys(CountryInfo).map((currency, i) => {
       return {
         key: i,
         label: `${CountryInfo[currency].countryEmoji} ${

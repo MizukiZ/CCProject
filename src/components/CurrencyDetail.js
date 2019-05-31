@@ -6,7 +6,13 @@ import { TextInput } from "react-native"
 import { Grid, Row, Col } from "react-native-easy-grid"
 import BaseCurrency from "./BaseCurrency"
 import CountryInfo from "../assets/counrty_Infomation_handler"
-import { convertCurrency, roundWithDecimalPoint } from "../helpers/caluculate"
+import {
+  convertCurrency,
+  roundWithDecimalPoint,
+  getComparisonData
+} from "../helpers/caluculate"
+
+import { fetchCurrencyHistoricalData } from "../store/actions/index"
 class CurrencyDetail extends Component {
   static navigationOptions = {
     headerTitleStyle: { alignSelf: "center" },
@@ -17,7 +23,8 @@ class CurrencyDetail extends Component {
   state = {
     baseInput: "1",
     rate: null,
-    result: null
+    result: null,
+    statement: null
   }
 
   render() {
@@ -30,7 +37,9 @@ class CurrencyDetail extends Component {
               <Thumbnail square source={CountryInfo[currency].flag} />
             </Row>
             <Row style={{ justifyContent: "center" }}>
-              <Text>{CountryInfo[currency].currencyName}</Text>
+              <Text style={{ fontWeight: "bold" }}>
+                {CountryInfo[currency].currencyName}
+              </Text>
             </Row>
             <Row style={{ margin: 40 }}>
               <Col size={40} style={{ alignItems: "center" }}>
@@ -87,12 +96,37 @@ class CurrencyDetail extends Component {
                 </Row>
               </Col>
             </Row>
-            <Row />
+
+            <Row style={{ justifyContent: "center" }}>
+              <Text style={{ fontWeight: "bold", marginRight: 10 }}>
+                {this.getStatement(currency).generalState}
+              </Text>
+
+              <Text style={{ color: this.getStatement(currency).color }}>
+                {this.getStatement(currency).comparisonState}
+              </Text>
+            </Row>
             <Row />
           </Grid>
         </Content>
       </Container>
     )
+  }
+
+  getStatement = currency => {
+    const comparisonData = getComparisonData(
+      this.props.currencyData.latestData[currency],
+      this.props.currencyData.lastCurrencyRate
+    )
+
+    return {
+      generalState: `1 ${this.props.baseCurrency} : ${roundWithDecimalPoint(
+        this.props.currencyData.latestData[currency],
+        4
+      )}`,
+      comparisonState: `${comparisonData.value}(${comparisonData.percentage})`,
+      color: comparisonData.positive ? "green" : "red"
+    }
   }
 
   componentDidMount() {
@@ -101,6 +135,7 @@ class CurrencyDetail extends Component {
       this.props.currencyData.latestData[currency],
       4
     )
+    this.props.onFetchHistoricalData(this.props.baseCurrency, currency)
 
     this.setState({
       result: String(latestRate),
@@ -117,7 +152,11 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  return {
+    onFetchHistoricalData: (base, other) => {
+      dispatch(fetchCurrencyHistoricalData(base, other))
+    }
+  }
 }
 
 export default connect(
