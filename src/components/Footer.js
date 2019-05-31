@@ -3,12 +3,19 @@ import { Footer, FooterTab, Button, Icon } from "native-base"
 import { connect } from "react-redux"
 import { toggelCalculator } from "../store/actions/index"
 
+import { NavigationActions } from "react-navigation"
+
 class CCFooter extends Component {
   render() {
+    console.log(this.props)
     return (
       <Footer>
         <FooterTab>
-          <Button>
+          <Button
+            onPress={() => {
+              this.props.onPressIcon("Home")
+            }}
+          >
             <Icon
               type="FontAwesome"
               name="home"
@@ -17,7 +24,7 @@ class CCFooter extends Component {
           </Button>
           <Button
             onPress={() => {
-              this.props.navigationObject.push("History")
+              this.props.onPressIcon("History")
             }}
           >
             <Icon
@@ -28,7 +35,7 @@ class CCFooter extends Component {
           </Button>
           <Button
             onPress={() => {
-              this.props.navigationObject.push("Setting")
+              this.props.onPressIcon("Setting")
             }}
           >
             <Icon
@@ -50,13 +57,21 @@ class CCFooter extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    nav: state.nav
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
-    onToggleCalculator: () => dispatch(toggelCalculator())
+    onToggleCalculator: () => dispatch(toggelCalculator()),
+    onPressIcon: Route =>
+      dispatch(NavigationActions.navigate({ routeName: Route }))
   }
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CCFooter)

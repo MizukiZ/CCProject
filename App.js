@@ -35,7 +35,7 @@ class App extends Component<Props> {
         <Content>
           <CurrencyCardList navigationObject={this.props.navigation} />
         </Content>
-        <CCFooter navigationObject={this.props.navigation} />
+        {/* <CCFooter navigationObject={this.props.navigation} /> */}
       </Container>
     )
   }
