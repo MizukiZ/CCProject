@@ -31,30 +31,12 @@ class App extends Component<Props> {
     return (
       <Container>
         <CCCalculator />
-        {/* <CCHeader /> */}
         <Content>
           <CurrencyCardList navigationObject={this.props.navigation} />
         </Content>
-        {/* <CCFooter navigationObject={this.props.navigation} /> */}
       </Container>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    currency: state.currency,
-    setting: state.setting
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onFetchCurrencyHistoricalData: () => dispatch(fetchCurrencyHistoricalData())
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App)
+export default App

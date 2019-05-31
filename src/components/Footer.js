@@ -7,7 +7,6 @@ import { NavigationActions } from "react-navigation"
 
 class CCFooter extends Component {
   render() {
-    console.log(this.props)
     return (
       <Footer>
         <FooterTab>
@@ -57,12 +56,6 @@ class CCFooter extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    nav: state.nav
-  }
-}
-
 const mapDispatchToProps = dispatch => {
   return {
     onToggleCalculator: () => dispatch(toggelCalculator()),
@@ -72,6 +65,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(CCFooter)
