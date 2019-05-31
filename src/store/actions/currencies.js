@@ -1,6 +1,7 @@
 import {
   FETCH_CURRENCY_HISTORICAL_DATA,
-  FETCH_CURRENCY_LATEST_DATA
+  FETCH_CURRENCY_LATEST_DATA,
+  CREATE_CURRENCY_DETAIL_STATEMENT
 } from "./actionTypes"
 import axios from "axios"
 
@@ -20,7 +21,7 @@ const today = formatDate(new Date())
 // date of 2nd params months ago from tody
 const monthAgo = formatDate(new Date(), 2)
 
-export const fetchLatestData = data => {
+const fetchLatestData = data => {
   return {
     type: FETCH_CURRENCY_LATEST_DATA,
     latestData: data
@@ -43,10 +44,21 @@ export const fetchCurrencyLatestData = baseCurrency => {
   }
 }
 
-export const fetcHistoricalhData = data => {
+const fetcHistoricalhData = data => {
   return {
     type: FETCH_CURRENCY_HISTORICAL_DATA,
     historicalData: data
+  }
+}
+
+const createCurrencyDetailStatement = (
+  baseCurrency,
+  otherCurrency,
+  historicalData
+) => {
+  return {
+    type: CREATE_CURRENCY_DETAIL_STATEMENT,
+    data: { baseCurrency, otherCurrency, historicalData }
   }
 }
 
@@ -59,6 +71,13 @@ export const fetchCurrencyHistoricalData = (baseCurrency, otherCurrency) => {
       .get(apiHistoricalDataURL)
       .then(response => {
         dispatch(fetcHistoricalhData(response.data.rates))
+        dispatch(
+          createCurrencyDetailStatement(
+            baseCurrency,
+            otherCurrency,
+            response.data.rates
+          )
+        )
       })
       .catch(error => {
         throw error

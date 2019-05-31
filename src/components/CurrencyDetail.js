@@ -23,8 +23,7 @@ class CurrencyDetail extends Component {
   state = {
     baseInput: "1",
     rate: null,
-    result: null,
-    statement: null
+    result: null
   }
 
   render() {
@@ -44,7 +43,9 @@ class CurrencyDetail extends Component {
             <Row style={{ margin: 40 }}>
               <Col size={40} style={{ alignItems: "center" }}>
                 <Row>
-                  <Text>{this.props.baseCurrency}</Text>
+                  <Text style={{ fontWeight: "bold" }}>
+                    {this.props.baseCurrency}
+                  </Text>
                 </Row>
                 <Row>
                   <TextInput
@@ -83,7 +84,7 @@ class CurrencyDetail extends Component {
               </Col>
               <Col size={40} style={{ alignItems: "center" }}>
                 <Row>
-                  <Text>{currency}</Text>
+                  <Text style={{ fontWeight: "bold" }}>{currency}</Text>
                 </Row>
                 <Row>
                   <TextInput
@@ -96,14 +97,12 @@ class CurrencyDetail extends Component {
                 </Row>
               </Col>
             </Row>
-
             <Row style={{ justifyContent: "center" }}>
               <Text style={{ fontWeight: "bold", marginRight: 10 }}>
-                {this.getStatement(currency).generalState}
+                {this.props.currencyData.generalStatement}
               </Text>
-
-              <Text style={{ color: this.getStatement(currency).color }}>
-                {this.getStatement(currency).comparisonState}
+              <Text style={{ color: this.props.currencyData.stateColor }}>
+                {this.props.currencyData.comaprisonStatement}
               </Text>
             </Row>
             <Row />
@@ -113,19 +112,29 @@ class CurrencyDetail extends Component {
     )
   }
 
-  getStatement = currency => {
-    const comparisonData = getComparisonData(
-      this.props.currencyData.latestData[currency],
-      this.props.currencyData.lastCurrencyRate
-    )
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // when basecurrency is chaged, fetch new historical data
+    if (prevProps.baseCurrency != this.props.baseCurrency) {
+      const currency = this.props.navigation.getParam("currency", "Not found")
+      this.props.onFetchHistoricalData(this.props.baseCurrency, currency)
+    }
 
-    return {
-      generalState: `1 ${this.props.baseCurrency} : ${roundWithDecimalPoint(
-        this.props.currencyData.latestData[currency],
+    if (
+      prevProps.currencyData.latestData != this.props.currencyData.latestData
+    ) {
+      const latestRate = roundWithDecimalPoint(
+        this.props.currencyData.latestData[
+          this.props.navigation.getParam("currency", "Not found")
+        ],
         4
-      )}`,
-      comparisonState: `${comparisonData.value}(${comparisonData.percentage})`,
-      color: comparisonData.positive ? "green" : "red"
+      )
+
+      //reset state
+      this.setState({
+        result: String(latestRate),
+        rate: latestRate,
+        baseInput: "1"
+      })
     }
   }
 
