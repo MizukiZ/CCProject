@@ -16,6 +16,22 @@ export const changeAutoConvertionHistorySave = flag => {
   }
 }
 
+export const changeAutoConvertionHistorySaveFromFirebase = flag => {
+  return dispatch => {
+    return firebase
+      .database()
+      .ref("/settings/" + deviceID)
+      .update({ convertionHistorySave: flag })
+      .then(function(snapshot) {
+        // update redux aswell
+        dispatch(changeAutoConvertionHistorySave(flag))
+      })
+      .catch(error => {
+        throw error
+      })
+  }
+}
+
 export const changeAutoLocation = flag => {
   return {
     type: CHANGE_AUTO_LOCATION,
@@ -23,10 +39,42 @@ export const changeAutoLocation = flag => {
   }
 }
 
+export const changeAutoLocationFromFirebase = flag => {
+  return dispatch => {
+    return firebase
+      .database()
+      .ref("/settings/" + deviceID)
+      .update({ autoLocation: flag })
+      .then(function(snapshot) {
+        // update redux aswell
+        dispatch(changeAutoLocation(flag))
+      })
+      .catch(error => {
+        throw error
+      })
+  }
+}
+
 export const changeBaseCurrency = code => {
   return {
     type: CHANGE_BASE_CURRENCY,
     baseCurrency: code
+  }
+}
+
+export const changeBaseCurrencyFromFirebase = currencyCode => {
+  return dispatch => {
+    return firebase
+      .database()
+      .ref("/settings/" + deviceID)
+      .update({ baseCurrency: currencyCode })
+      .then(function(snapshot) {
+        // update redux aswell
+        dispatch(changeBaseCurrency(currencyCode))
+      })
+      .catch(error => {
+        throw error
+      })
   }
 }
 
@@ -94,13 +142,6 @@ export const addCurrency = code => {
   }
 }
 
-export const deleteCurrency = code => {
-  return {
-    type: DELETE_CURRENCY,
-    currencyCode: code
-  }
-}
-
 export const addCurrencyFromFirebase = (code, originalList) => {
   // create a hash format data to send to firebase
   originalList.push(code)
@@ -120,6 +161,13 @@ export const addCurrencyFromFirebase = (code, originalList) => {
       .catch(error => {
         throw error
       })
+  }
+}
+
+export const deleteCurrency = code => {
+  return {
+    type: DELETE_CURRENCY,
+    currencyCode: code
   }
 }
 

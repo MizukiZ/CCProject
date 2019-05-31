@@ -15,6 +15,12 @@ import { connect } from "react-redux"
 import ModalSelector from "react-native-modal-selector"
 import CountryInfo from "../assets/counrty_Infomation_handler"
 
+import {
+  changeAutoConvertionHistorySaveFromFirebase,
+  changeAutoLocationFromFirebase,
+  changeBaseCurrencyFromFirebase
+} from "../store/actions/index"
+
 class Setting extends Component {
   static navigationOptions = {
     headerTitleStyle: { alignSelf: "center" },
@@ -50,6 +56,8 @@ class Setting extends Component {
               data={data}
               onChange={option => {
                 this.setState({ baseCurrencyLabel: option.label })
+                const currencyCode = option.customKey
+                this.props.onChangeBaseCurrency(currencyCode)
               }}
             >
               <TextInput
@@ -70,9 +78,16 @@ class Setting extends Component {
               }}
               onPress={() => {
                 // toggle history save check
-                this.setState({
-                  convertionHistorySave: !this.state.convertionHistorySave
-                })
+                this.setState(
+                  {
+                    convertionHistorySave: !this.state.convertionHistorySave
+                  },
+                  () => {
+                    this.props.onChangeHistorySave(
+                      this.state.convertionHistorySave
+                    )
+                  }
+                )
               }}
             />
             <Body>
@@ -87,9 +102,14 @@ class Setting extends Component {
               checked={this.state.autoLocation}
               onPress={() => {
                 // toggle history save check
-                this.setState({
-                  autoLocation: !this.state.autoLocation
-                })
+                this.setState(
+                  {
+                    autoLocation: !this.state.autoLocation
+                  },
+                  () => {
+                    this.props.onChangeAutoLocation(this.state.autoLocation)
+                  }
+                )
               }}
             />
             <Body>
@@ -122,14 +142,21 @@ const mapStateToProps = state => {
   }
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onAddCurrency: (currencyCode, originalList) =>
-//       dispatch(addCurrencyFromFirebase(currencyCode, originalList))
-//   }
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    onChangeBaseCurrency: currencyCode => {
+      dispatch(changeBaseCurrencyFromFirebase(currencyCode))
+    },
+    onChangeHistorySave: flag => {
+      dispatch(changeAutoConvertionHistorySaveFromFirebase(flag))
+    },
+    onChangeAutoLocation: flag => {
+      dispatch(changeAutoLocationFromFirebase(flag))
+    }
+  }
+}
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Setting)

@@ -4,9 +4,9 @@ export {
 } from "./currencies"
 export { toggelCalculator } from "./calculator"
 export {
-  changeBaseCurrency,
-  changeAutoConvertionHistorySave,
-  changeAutoLocation,
+  changeAutoLocationFromFirebase,
+  changeAutoConvertionHistorySaveFromFirebase,
+  changeBaseCurrencyFromFirebase,
   fechDeviceSettingsFromFirebase,
   addCurrencyFromFirebase,
   deleteCurrencyFromFirebase
