@@ -62,7 +62,8 @@ export const fechDeviceSettingsFromFirebase = () => {
               baseCurrency,
               convertionHistorySave,
               autoLocation,
-              displayCurrency
+              displayCurrency,
+              loaded: true
             })
           )
         } else {
@@ -75,7 +76,8 @@ export const fechDeviceSettingsFromFirebase = () => {
               baseCurrency: "AUD",
               convertionHistorySave: true,
               autoLocation: false,
-              displayCurrency: { 0: "JPY" }
+              displayCurrency: { 0: "JPY" },
+              loaded: true
             })
         }
       })

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react"
-import { Button, Icon, Text, Content } from "native-base"
+import { Button, Icon, Text, Content, Spinner } from "native-base"
 import { connect } from "react-redux"
 import { Grid, Row, Col } from "react-native-easy-grid"
 
@@ -10,17 +10,21 @@ class CurrencyCardList extends Component {
     return (
       <Fragment>
         <Grid>
-          {this.props.setting.displayCurrency.map(currencyCode => {
-            return (
-              <Row key={`card-${currencyCode}`}>
-                <CurrencyCard
-                  key={`card-${currencyCode}`}
-                  navigationObject={this.props.navigationObject}
-                  currencyCode={currencyCode}
-                />
-              </Row>
-            )
-          })}
+          {this.props.setting.loaded ? (
+            this.props.setting.displayCurrency.map(currencyCode => {
+              return (
+                <Row key={`card-${currencyCode}`}>
+                  <CurrencyCard
+                    key={`card-${currencyCode}`}
+                    navigationObject={this.props.navigationObject}
+                    currencyCode={currencyCode}
+                  />
+                </Row>
+              )
+            })
+          ) : (
+            <Spinner color="gray" />
+          )}
           <Row style={{ justifyContent: "center", marginTop: 20 }}>
             <AddCurrency />
           </Row>

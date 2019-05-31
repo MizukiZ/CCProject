@@ -1,20 +1,24 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-
 import { Thumbnail } from "native-base"
 import CountryInfo from "../assets/counrty_Infomation_handler"
 
 class BaseCurrency extends Component {
   render() {
     return (
-      <Thumbnail square source={CountryInfo[this.props.baseCurrency].flag} />
+      this.props.setting.loaded && (
+        <Thumbnail
+          square
+          source={CountryInfo[this.props.setting.baseCurrency].flag}
+        />
+      )
     )
   }
 }
 
 const mapStateToProps = state => {
   return {
-    baseCurrency: state.setting.baseCurrency
+    setting: state.setting
   }
 }
 

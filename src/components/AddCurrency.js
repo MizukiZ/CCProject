@@ -1,11 +1,14 @@
 import React, { Component } from "react"
-import { Button, Icon, Text } from "native-base"
+import { Button, Icon, Text, Spinner } from "native-base"
 import { connect } from "react-redux"
 import { addCurrencyFromFirebase } from "../store/actions/index"
 import CountryInfo from "../assets/counrty_Infomation_handler"
 import ModalSelector from "react-native-modal-selector"
 
 class AddCurrency extends Component {
+  state = {
+    isChnageLoaded: true
+  }
   render() {
     const avaliableCurrencyList = Object.keys(CountryInfo).filter(currency => {
       // remove used currencies
@@ -26,21 +29,35 @@ class AddCurrency extends Component {
         data={data}
         cancelButtonAccessibilityLabel={"Cancel Button"}
         onChange={option => {
+          // set change loaded false to show spinner
+          this.setState({ isChnageLoaded: false })
           this.props.onAddCurrency(option.customKey, [
             ...this.props.displayCurrency
           ])
         }}
       >
-        <Button bordered primary>
-          <Icon
-            type="FontAwesome"
-            name="money"
-            style={{ fontSize: 30, color: "blue" }}
-          />
-          <Text>Add Currency</Text>
-        </Button>
+        {this.state.isChnageLoaded ? (
+          <Button bordered primary>
+            <Icon
+              type="FontAwesome"
+              name="money"
+              style={{ fontSize: 30, color: "blue" }}
+            />
+            <Text>Add Currency</Text>
+          </Button>
+        ) : (
+          <Spinner color="gray" />
+        )}
       </ModalSelector>
     )
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // when display currency is changed
+    if (prevProps.displayCurrency != this.props.displayCurrency) {
+      // set change loaded true to disappare spinner
+      this.setState({ isChnageLoaded: true })
+    }
   }
 }
 
