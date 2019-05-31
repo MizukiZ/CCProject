@@ -23,7 +23,7 @@ import BaseCurrency from "./src/components/BaseCurrency"
 
 class App extends Component<Props> {
   static navigationOptions = ({ navigation }) => ({
-    title: "Dashborad",
+    title: "Dashboard",
     headerRight: <BaseCurrency />
   })
 

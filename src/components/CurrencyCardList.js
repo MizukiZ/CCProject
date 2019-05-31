@@ -5,12 +5,17 @@ import { Grid, Row, Col } from "react-native-easy-grid"
 
 import CurrencyCard from "./CurrencyCard"
 import AddCurrency from "./AddCurrency"
+
+import {
+  fetchCurrencyHistoricalData,
+  fetchCurrencyLatestData
+} from "../store/actions/index"
 class CurrencyCardList extends Component {
   render() {
     return (
       <Fragment>
         <Grid>
-          {this.props.setting.loaded ? (
+          {this.props.latestDataLoaded ? (
             this.props.setting.displayCurrency.map(currencyCode => {
               return (
                 <Row key={`card-${currencyCode}`}>
@@ -32,12 +37,32 @@ class CurrencyCardList extends Component {
       </Fragment>
     )
   }
+
+  componentDidUpdate() {
+    // when basecurrency is loaded
+    if (this.props.setting.baseCurrency) {
+      // fetch currency realated data with base currency
+      const base = this.props.setting.baseCurrency
+      this.props.onFetchCurrencyLatestData(base)
+    }
+  }
 }
 
 const mapStateToProps = state => {
   return {
-    setting: state.setting
+    setting: state.setting,
+    latestDataLoaded: state.currency.latestDataLoaded
   }
 }
 
-export default connect(mapStateToProps)(CurrencyCardList)
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchCurrencyLatestData: baseCurrency =>
+      dispatch(fetchCurrencyLatestData(baseCurrency))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CurrencyCardList)

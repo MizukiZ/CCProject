@@ -5,7 +5,9 @@ import {
 
 initialCurrencyState = {
   latestData: [],
-  historicalData: []
+  latestDataLoaded: false,
+  historicalData: [],
+  historicalDataLoaded: false
 }
 
 export default function currencyReducer(state = initialCurrencyState, action) {
@@ -13,12 +15,14 @@ export default function currencyReducer(state = initialCurrencyState, action) {
     case FETCH_CURRENCY_LATEST_DATA:
       return {
         ...state,
-        latestData: action.latestData
+        latestData: action.latestData,
+        latestDataLoaded: true
       }
     case FETCH_CURRENCY_HISTORICAL_DATA:
       return {
         ...state,
-        historicalData: action.historicalData
+        historicalData: action.historicalData,
+        historicalDataLoaded: true
       }
     default:
       return state

@@ -10,6 +10,7 @@ class BaseCurrency extends Component {
         <Thumbnail
           square
           source={CountryInfo[this.props.setting.baseCurrency].flag}
+          style={{ marginRight: 10 }}
         />
       )
     )
