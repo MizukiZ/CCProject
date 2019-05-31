@@ -8,6 +8,7 @@ import {
 } from "./actionTypes"
 import DeviceInfo from "react-native-device-info"
 import firebase from "react-native-firebase"
+import { fetchCurrencyLatestData } from "./index"
 
 export const changeAutoConvertionHistorySave = flag => {
   return {
@@ -70,6 +71,7 @@ export const changeBaseCurrencyFromFirebase = currencyCode => {
       .update({ baseCurrency: currencyCode })
       .then(function(snapshot) {
         // update redux aswell
+        dispatch(fetchCurrencyLatestData(currencyCode))
         dispatch(changeBaseCurrency(currencyCode))
       })
       .catch(error => {

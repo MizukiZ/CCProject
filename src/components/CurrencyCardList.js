@@ -38,9 +38,9 @@ class CurrencyCardList extends Component {
     )
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    // when basecurrency is changed
-    if (prevProps.setting.baseCurrency != this.props.setting.baseCurrency) {
+  componentDidUpdate() {
+    // initial loading (only one shot)
+    if (!this.props.latestDataLoaded) {
       // fetch currency realated data with base currency
       const base = this.props.setting.baseCurrency
       this.props.onFetchCurrencyLatestData(base)
