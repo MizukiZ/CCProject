@@ -20,7 +20,10 @@ import {
   getComparisonData
 } from "../helpers/caluculate"
 
-import { fetchCurrencyHistoricalData } from "../store/actions/index"
+import {
+  fetchCurrencyHistoricalData,
+  addHistoryFromFirebase
+} from "../store/actions/index"
 class CurrencyDetail extends Component {
   static navigationOptions = {
     headerTitleStyle: { alignSelf: "center" },
@@ -82,6 +85,16 @@ class CurrencyDetail extends Component {
                         this.state.rate
                       )
                       roundedResult = roundWithDecimalPoint(result, 4)
+
+                      //save the convertion history to firebase using despatch
+                      const historyData = {
+                        baseCurrency: this.props.baseCurrency,
+                        otherCurrency: currency,
+                        input: this.state.baseInput,
+                        result: roundedResult,
+                        timestamp: Date.now()
+                      }
+                      this.props.onAddHistory(historyData, this.props.history)
                       this.setState({ result: String(roundedResult) })
                     }}
                   >
@@ -180,7 +193,8 @@ class CurrencyDetail extends Component {
 const mapStateToProps = state => {
   return {
     currencyData: state.currency,
-    baseCurrency: state.setting.baseCurrency
+    baseCurrency: state.setting.baseCurrency,
+    history: state.history
   }
 }
 
@@ -189,6 +203,9 @@ const mapDispatchToProps = dispatch => {
     onFetchHistoricalData: (base, other) => {
       return dispatch(fetchCurrencyHistoricalData(base, other))
       return Promise.resolve()
+    },
+    onAddHistory: (historyData, originalHistory) => {
+      return dispatch(addHistoryFromFirebase(historyData, originalHistory))
     }
   }
 }

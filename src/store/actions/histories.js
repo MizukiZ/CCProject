@@ -6,7 +6,7 @@ import {
 import DeviceInfo from "react-native-device-info"
 import firebase from "react-native-firebase"
 
-export const fetchConvertHistory = data => {
+const fetchConvertHistory = data => {
   return {
     type: FETCH_CONVERT_HISTORY,
     data: data
@@ -25,25 +25,8 @@ export const fetchConvertHistoryFromFirebase = () => {
       .then(function(snapshot) {
         // if there is an exsisting convertion history for the currenct device
         if (snapshot.val()) {
-          // get each value from snapshot
-          const {
-            baseCurrency,
-            otherCurrncy,
-            baseValue,
-            result,
-            timestamp
-          } = snapshot.val()
-
           // dispatch the mothod to update state
-          dispatch(
-            fetchConvertHistory({
-              baseCurrency,
-              otherCurrncy,
-              baseValue,
-              result,
-              timestamp
-            })
-          )
+          dispatch(fetchConvertHistory(snapshot.val()))
         }
       })
       .catch(error => {
@@ -52,9 +35,9 @@ export const fetchConvertHistoryFromFirebase = () => {
   }
 }
 
-export const addHistory = data => {
+const addHistory = data => {
   return {
-    type: ADD_CURRENCY,
+    type: ADD_CONVERT_HISTORY,
     data: data
   }
 }

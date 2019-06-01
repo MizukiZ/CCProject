@@ -12,13 +12,17 @@ import configureStore, {
 } from "./src/store/configureStore"
 import CCFooter from "./src/components/Footer"
 
-import { fechDeviceSettingsFromFirebase } from "./src/store/actions/index"
+import {
+  fechDeviceSettingsFromFirebase,
+  fetchConvertHistoryFromFirebase
+} from "./src/store/actions/index"
 
 fechDeviceSettingsFromFirebase()
 const store = configureStore()
 
-// fetch device settings if there is,
+// fetch device settings and convertion history if there is,
 store.dispatch(fechDeviceSettingsFromFirebase())
+store.dispatch(fetchConvertHistoryFromFirebase())
 
 // warpping by RNRRedux element to pass store
 const RNRedux = () => (

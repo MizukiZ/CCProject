@@ -1,16 +1,19 @@
 import React, { Component } from "react"
 import { Container, Content, Text } from "native-base"
+import { connect } from "react-redux"
 
-export default class History extends Component {
+import { fetchConvertHistoryFromFirebase } from "../store/actions/index"
+
+class History extends Component {
   static navigationOptions = {
     headerTitleStyle: {
       textAlign: "center",
       flex: 1
     },
     title: "History",
-
-    headerRight: <Content />
+    headerRight: <Content /> // needed for make the title center for Android
   }
+
   render() {
     return (
       <Container>
@@ -20,4 +23,27 @@ export default class History extends Component {
       </Container>
     )
   }
+
+  componentDidMount() {
+    this.props.onFetchConvertHistory()
+  }
 }
+
+const mapStateToProps = state => {
+  return {
+    history: state.history
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchConvertHistory: () => {
+      dispatch(fetchConvertHistoryFromFirebase())
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(History)

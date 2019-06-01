@@ -11,3 +11,8 @@ export {
   addCurrencyFromFirebase,
   deleteCurrencyFromFirebase
 } from "./settings"
+
+export {
+  fetchConvertHistoryFromFirebase,
+  addHistoryFromFirebase
+} from "./histories"
