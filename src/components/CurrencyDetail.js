@@ -1,7 +1,15 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import CurrencyChart from "./CurrencyChart.js"
-import { Container, Content, Button, Thumbnail, Text, Icon } from "native-base"
+import {
+  Container,
+  Content,
+  Button,
+  Thumbnail,
+  Text,
+  Icon,
+  Spinner
+} from "native-base"
 import { TextInput } from "react-native"
 import { Grid, Row, Col } from "react-native-easy-grid"
 import BaseCurrency from "./BaseCurrency"
@@ -21,6 +29,7 @@ class CurrencyDetail extends Component {
   }
 
   state = {
+    isDataReady: false,
     baseInput: "1",
     rate: null,
     result: null
@@ -31,83 +40,87 @@ class CurrencyDetail extends Component {
     return (
       <Container>
         <Content>
-          <Grid>
-            <Row style={{ justifyContent: "center" }}>
-              <Thumbnail square source={CountryInfo[currency].flag} />
-            </Row>
-            <Row style={{ justifyContent: "center" }}>
-              <Text style={{ fontWeight: "bold" }}>
-                {CountryInfo[currency].currencyName}
-              </Text>
-            </Row>
-            <Row style={{ margin: 40 }}>
-              <Col size={40} style={{ alignItems: "center" }}>
-                <Row>
-                  <Text style={{ fontWeight: "bold" }}>
-                    {this.props.baseCurrency}
-                  </Text>
-                </Row>
-                <Row>
-                  <TextInput
-                    style={{
-                      borderColor: "gray",
-                      borderWidth: 1,
-                      minWidth: 60
+          {this.state.isDataReady ? (
+            <Grid>
+              <Row style={{ justifyContent: "center" }}>
+                <Thumbnail square source={CountryInfo[currency].flag} />
+              </Row>
+              <Row style={{ justifyContent: "center" }}>
+                <Text style={{ fontWeight: "bold" }}>
+                  {CountryInfo[currency].currencyName}
+                </Text>
+              </Row>
+              <Row style={{ margin: 40 }}>
+                <Col size={40} style={{ alignItems: "center" }}>
+                  <Row>
+                    <Text style={{ fontWeight: "bold" }}>
+                      {this.props.baseCurrency}
+                    </Text>
+                  </Row>
+                  <Row>
+                    <TextInput
+                      style={{
+                        borderColor: "gray",
+                        borderWidth: 1,
+                        minWidth: 60
+                      }}
+                      keyboardType="number-pad"
+                      onChangeText={input => {
+                        this.setState({ baseInput: input })
+                      }}
+                      value={this.state.baseInput}
+                    />
+                  </Row>
+                </Col>
+                <Col size={20} style={{ alignItems: "center" }}>
+                  <Button
+                    transparent
+                    style={{ alignSelf: "center" }}
+                    onPress={() => {
+                      const result = convertCurrency(
+                        Number(this.state.baseInput),
+                        this.state.rate
+                      )
+                      roundedResult = roundWithDecimalPoint(result, 4)
+                      this.setState({ result: String(roundedResult) })
                     }}
-                    keyboardType="number-pad"
-                    onChangeText={input => {
-                      this.setState({ baseInput: input })
-                    }}
-                    value={this.state.baseInput}
-                  />
-                </Row>
-              </Col>
-              <Col size={20} style={{ alignItems: "center" }}>
-                <Button
-                  transparent
-                  style={{ alignSelf: "center" }}
-                  onPress={() => {
-                    const result = convertCurrency(
-                      Number(this.state.baseInput),
-                      this.state.rate
-                    )
-                    roundedResult = roundWithDecimalPoint(result, 4)
-                    this.setState({ result: String(roundedResult) })
-                  }}
-                >
-                  <Icon
-                    type="FontAwesome"
-                    name="exchange"
-                    style={{ fontSize: 26 }}
-                  />
-                </Button>
-              </Col>
-              <Col size={40} style={{ alignItems: "center" }}>
-                <Row>
-                  <Text style={{ fontWeight: "bold" }}>{currency}</Text>
-                </Row>
-                <Row>
-                  <TextInput
-                    style={{
-                      color: "black"
-                    }}
-                    editable={false}
-                    value={this.state.result}
-                  />
-                </Row>
-              </Col>
-            </Row>
-            <Row style={{ justifyContent: "center" }}>
-              <Text style={{ fontWeight: "bold", marginRight: 10 }}>
-                {this.props.currencyData.generalStatement}
-              </Text>
-              <Text style={{ color: this.props.currencyData.stateColor }}>
-                {this.props.currencyData.comaprisonStatement}
-              </Text>
-            </Row>
-            <CurrencyChart />
-            <Row />
-          </Grid>
+                  >
+                    <Icon
+                      type="FontAwesome"
+                      name="exchange"
+                      style={{ fontSize: 26 }}
+                    />
+                  </Button>
+                </Col>
+                <Col size={40} style={{ alignItems: "center" }}>
+                  <Row>
+                    <Text style={{ fontWeight: "bold" }}>{currency}</Text>
+                  </Row>
+                  <Row>
+                    <TextInput
+                      style={{
+                        color: "black"
+                      }}
+                      editable={false}
+                      value={this.state.result}
+                    />
+                  </Row>
+                </Col>
+              </Row>
+              <Row style={{ justifyContent: "center" }}>
+                <Text style={{ fontWeight: "bold", marginRight: 10 }}>
+                  {this.props.currencyData.generalStatement}
+                </Text>
+                <Text style={{ color: this.props.currencyData.stateColor }}>
+                  {this.props.currencyData.comaprisonStatement}
+                </Text>
+              </Row>
+              <CurrencyChart />
+              <Row />
+            </Grid>
+          ) : (
+            <Spinner color="gray" />
+          )}
         </Content>
       </Container>
     )
@@ -116,8 +129,13 @@ class CurrencyDetail extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     // when basecurrency is chaged, fetch new historical data
     if (prevProps.baseCurrency != this.props.baseCurrency) {
+      this.setState({ isDataReady: false })
       const currency = this.props.navigation.getParam("currency", "Not found")
-      this.props.onFetchHistoricalData(this.props.baseCurrency, currency)
+      this.props
+        .onFetchHistoricalData(this.props.baseCurrency, currency)
+        .then(() => {
+          this.setState({ isDataReady: true })
+        })
     }
 
     if (
@@ -145,7 +163,12 @@ class CurrencyDetail extends Component {
       this.props.currencyData.latestData[currency],
       4
     )
-    this.props.onFetchHistoricalData(this.props.baseCurrency, currency)
+    this.props
+      .onFetchHistoricalData(this.props.baseCurrency, currency)
+      .then(() => {
+        // call back of fetch historical data, change isReady state to ture
+        this.setState({ isDataReady: true })
+      })
 
     this.setState({
       result: String(latestRate),
@@ -164,7 +187,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onFetchHistoricalData: (base, other) => {
-      dispatch(fetchCurrencyHistoricalData(base, other))
+      return dispatch(fetchCurrencyHistoricalData(base, other))
+      return Promise.resolve()
     }
   }
 }

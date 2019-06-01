@@ -9,45 +9,39 @@ import {
   VictoryAxis
 } from "victory-native"
 
-import { Spinner } from "native-base"
-
 class CurrencyChart extends Component {
   render() {
     data = chartFormat(this.props.currencyHistoricalData)
 
     return (
       <View>
-        {this.props.currencyHistoricalData.length != 0 ? (
-          <View style={styles.container} pointerEvents="none">
-            <VictoryChart theme={VictoryTheme.material}>
-              <VictoryArea
-                domain={{ y: [data.domain.min, data.domain.max] }}
-                style={{
-                  data: {
-                    fill: "#07EB96",
-                    fillOpacity: 0.7,
-                    stroke: "#05bf79",
-                    strokeWidth: 3
-                  }
-                }}
-                data={data.chartData}
-                interpolation="basis"
-                alignment="start"
-                animate={{
-                  duration: 2000,
-                  onLoad: { duration: 1000 }
-                }}
-              />
-              <VictoryAxis dependentAxis scale={{ x: "time" }} />
-              <VictoryAxis
-                scale={{ x: "time" }}
-                style={{ tickLabels: { angle: 30 } }}
-              />
-            </VictoryChart>
-          </View>
-        ) : (
-          <Spinner color="gray" />
-        )}
+        <View style={styles.container} pointerEvents="none">
+          <VictoryChart theme={VictoryTheme.material}>
+            <VictoryArea
+              domain={{ y: [data.domain.min, data.domain.max] }}
+              style={{
+                data: {
+                  fill: "#07EB96",
+                  fillOpacity: 0.7,
+                  stroke: "#05bf79",
+                  strokeWidth: 3
+                }
+              }}
+              data={data.chartData}
+              interpolation="basis"
+              alignment="start"
+              animate={{
+                duration: 2000,
+                onLoad: { duration: 1000 }
+              }}
+            />
+            <VictoryAxis dependentAxis scale={{ x: "time" }} />
+            <VictoryAxis
+              scale={{ x: "time" }}
+              style={{ tickLabels: { angle: 30 } }}
+            />
+          </VictoryChart>
+        </View>
       </View>
     )
   }

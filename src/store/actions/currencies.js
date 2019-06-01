@@ -82,5 +82,6 @@ export const fetchCurrencyHistoricalData = (baseCurrency, otherCurrency) => {
       .catch(error => {
         throw error
       })
+    return Promise.resolve()
   }
 }
