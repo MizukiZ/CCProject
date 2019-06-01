@@ -14,6 +14,7 @@ import com.facebook.soloader.SoLoader;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import java.util.Arrays;
 import java.util.List;
+import com.devfd.RNGeocoder.RNGeocoderPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -31,7 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNGestureHandlerPackage(),
             new RNFirebasePackage(),
               new RNFirebaseDatabasePackage(),
-            new RNDeviceInfo()
+            new RNDeviceInfo(),
+      new RNGeocoderPackage()
       );
     }
 
