@@ -42,6 +42,15 @@ class App extends Component<Props> {
       </Container>
     )
   }
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        console.log(position)
+      },
+      error => {}
+    )
+  }
 }
 
 export default App
