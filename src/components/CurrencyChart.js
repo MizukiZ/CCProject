@@ -9,6 +9,8 @@ import {
   VictoryAxis
 } from "victory-native"
 
+import { Spinner } from "native-base"
+
 class CurrencyChart extends Component {
   render() {
     data = chartFormat(this.props.currencyHistoricalData)
@@ -44,7 +46,7 @@ class CurrencyChart extends Component {
             </VictoryChart>
           </View>
         ) : (
-          <Text>Loading ...</Text>
+          <Spinner color="gray" />
         )}
       </View>
     )
@@ -84,7 +86,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5fcff"
+    backgroundColor: "#fff"
   }
 })
 
