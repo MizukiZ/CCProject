@@ -77,7 +77,10 @@ class App extends Component<Props> {
   }
 
   componentDidMount() {
-    this.autoLocationDetection()
+    // if autoLacation is enabled
+    if (this.props.autoLocation) {
+      this.autoLocationDetection()
+    }
   }
 }
 
