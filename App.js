@@ -9,7 +9,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { fetchCurrencyHistoricalData } from "./src/store/actions/index"
-import DeviceInfo from "react-native-device-info"
 
 // native base component
 import { Container, Content, Thumbnail } from "native-base"
@@ -20,6 +19,11 @@ import CCHeader from "./src/components/Header"
 import CCCalculator from "./src/components/Calculator"
 import CurrencyCardList from "./src/components/CurrencyCardList"
 import BaseCurrency from "./src/components/BaseCurrency"
+
+import Geocoder from "react-native-geocoder"
+import { countries, currencies, lookup } from "country-data"
+
+import { changeBaseCurrencyFromFirebase } from "./src/store/actions/index"
 
 class App extends Component<Props> {
   static navigationOptions = ({ navigation }) => ({
@@ -42,6 +46,60 @@ class App extends Component<Props> {
       </Container>
     )
   }
+
+  autoLocationDetection = () => {
+    console.log("DETECT!")
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const userPosition = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+        Geocoder.geocodePosition(userPosition).then(res => {
+          // res is an Array of geocoding object (see below)
+          const countryCode = res[0].countryCode
+          const currencyCode = countries[countryCode].currencies[0]
+
+          if (this.props.baseCurrency != currencyCode) {
+            this.props.onChangeBaseCurrency(currencyCode)
+          }
+        })
+      },
+      error => {}
+    )
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // when user sets autolocation true
+    if (!prevProps.autoLocation && this.props.autoLocation) {
+      this.autoLocationDetection()
+    }
+  }
+
+  componentDidMount() {
+    // if autoLacation is enabled
+    if (this.props.autoLocation) {
+      this.autoLocationDetection()
+    }
+  }
 }
 
-export default App
+const mapStateToProps = state => {
+  return {
+    baseCurrency: state.setting.baseCurrency,
+    autoLocation: state.setting.autoLocation
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onChangeBaseCurrency: currencyCode => {
+      dispatch(changeBaseCurrencyFromFirebase(currencyCode))
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)

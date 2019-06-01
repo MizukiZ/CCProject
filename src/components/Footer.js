@@ -16,7 +16,6 @@ class CCFooter extends Component {
           <Button
             active={this.state.activeSection == "Home" ? true : false}
             onPress={() => {
-              this.setState({ activeSection: "Home" })
               this.props.onPressIcon("Home")
             }}
           >
@@ -25,7 +24,6 @@ class CCFooter extends Component {
           <Button
             active={this.state.activeSection == "History" ? true : false}
             onPress={() => {
-              this.setState({ activeSection: "History" })
               this.props.onPressIcon("History")
             }}
           >
@@ -34,7 +32,6 @@ class CCFooter extends Component {
           <Button
             active={this.state.activeSection == "Setting" ? true : false}
             onPress={() => {
-              this.setState({ activeSection: "Setting" })
               this.props.onPressIcon("Setting")
             }}
           >
@@ -51,6 +48,18 @@ class CCFooter extends Component {
       </Footer>
     )
   }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.currencyPage != this.props.currencyPage) {
+      this.setState({ activeSection: this.props.currencyPage })
+    }
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    currencyPage: state.nav.routes[state.nav.routes.length - 1].routeName
+  }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -62,6 +71,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CCFooter)

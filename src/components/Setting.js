@@ -122,6 +122,14 @@ class Setting extends Component {
     )
   }
 
+  createLabel = () => {
+    const currency = this.props.setting.baseCurrency
+    const label = `${CountryInfo[currency].countryEmoji} ${
+      CountryInfo[currency].currencyName
+    }`
+    return label
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     // when setting has changed, fech new setting
     if (
@@ -131,17 +139,19 @@ class Setting extends Component {
     ) {
       this.props.onFetchDeviceSetting()
     }
+
+    if (prevProps.setting.baseCurrency != this.props.setting.baseCurrency) {
+      // set user basecurrency
+
+      this.setState({
+        baseCurrencyLabel: this.createLabel()
+      })
+    }
   }
 
   componentDidMount() {
-    // set user basecurrency
-    const currency = this.props.setting.baseCurrency
-    const label = `${CountryInfo[currency].countryEmoji} ${
-      CountryInfo[currency].currencyName
-    }`
-
     this.setState({
-      baseCurrencyLabel: label,
+      baseCurrencyLabel: this.createLabel(),
       convertionHistorySave: this.props.setting.convertionHistorySave,
       autoLocation: this.props.setting.autoLocation
     })
