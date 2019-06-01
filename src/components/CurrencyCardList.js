@@ -31,7 +31,7 @@ class CurrencyCardList extends Component {
             <Spinner color="gray" />
           )}
           <Row style={{ justifyContent: "center", marginTop: 20 }}>
-            <AddCurrency />
+            {this.props.setting.displayCurrency && <AddCurrency />}
           </Row>
         </Grid>
       </Fragment>

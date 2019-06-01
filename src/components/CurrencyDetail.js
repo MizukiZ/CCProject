@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-
+import CurrencyChart from "./CurrencyChart.js"
 import { Container, Content, Button, Thumbnail, Text, Icon } from "native-base"
 import { TextInput } from "react-native"
 import { Grid, Row, Col } from "react-native-easy-grid"
@@ -105,6 +105,7 @@ class CurrencyDetail extends Component {
                 {this.props.currencyData.comaprisonStatement}
               </Text>
             </Row>
+            <CurrencyChart />
             <Row />
           </Grid>
         </Content>
