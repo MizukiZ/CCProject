@@ -3,6 +3,7 @@ import { Container, Content, Text } from "native-base"
 import { connect } from "react-redux"
 
 import { fetchConvertHistoryFromFirebase } from "../store/actions/index"
+import HistoryCardList from "./HistoryCardList"
 
 class History extends Component {
   static navigationOptions = {
@@ -17,9 +18,7 @@ class History extends Component {
   render() {
     return (
       <Container>
-        <Content>
-          <Text> History page </Text>
-        </Content>
+        <Content>{this.props.history && <HistoryCardList />}</Content>
       </Container>
     )
   }
