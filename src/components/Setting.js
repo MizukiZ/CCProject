@@ -6,7 +6,8 @@ import {
   ListItem,
   CheckBox,
   Text,
-  Body
+  Body,
+  Toast
 } from "native-base"
 
 import { TextInput } from "react-native"
@@ -102,6 +103,15 @@ class Setting extends Component {
               }}
               checked={this.state.autoLocation}
               onPress={() => {
+                if (!this.props.setting.autoLocation) {
+                  Toast.show({
+                    text: "Please Make Sure Your GPS Is On!",
+                    buttonText: "Ok",
+                    duration: 5000,
+                    type: "warning"
+                  })
+                }
+
                 // toggle history save check
                 this.setState(
                   {

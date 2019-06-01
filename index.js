@@ -12,6 +12,8 @@ import configureStore, {
 } from "./src/store/configureStore"
 import CCFooter from "./src/components/Footer"
 
+import { Root } from "native-base"
+
 import {
   fechDeviceSettingsFromFirebase,
   fetchConvertHistoryFromFirebase
@@ -27,7 +29,9 @@ store.dispatch(fetchConvertHistoryFromFirebase())
 // warpping by RNRRedux element to pass store
 const RNRedux = () => (
   <Provider store={store}>
-    <AppWithNavigationState />
+    <Root>
+      <AppWithNavigationState />
+    </Root>
     <CCFooter />
   </Provider>
 )
