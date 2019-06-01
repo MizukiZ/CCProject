@@ -15,5 +15,6 @@ export {
 export {
   fetchConvertHistoryFromFirebase,
   addHistoryFromFirebase,
-  deleteHistoryFromFirebase
+  deleteHistoryFromFirebase,
+  deleteAllHistoryFromFirebase
 } from "./histories"

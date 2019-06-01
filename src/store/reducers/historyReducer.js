@@ -1,7 +1,8 @@
 import {
   FETCH_CONVERT_HISTORY,
   ADD_CONVERT_HISTORY,
-  DELETE_CONVERT_HISTORY
+  DELETE_CONVERT_HISTORY,
+  DELETE_ALL_CONVERT_HISTORY
 } from "../actions/actionTypes"
 
 initialSettingState = []
@@ -12,6 +13,8 @@ export default function historyReducer(state = initialSettingState, action) {
       return action.data
     case ADD_CONVERT_HISTORY:
       return state.concat(action.data)
+    case DELETE_ALL_CONVERT_HISTORY:
+      return []
     case DELETE_CONVERT_HISTORY:
       return state.filter(history => {
         return history.id != action.historyID

@@ -1,7 +1,8 @@
 import {
   FETCH_CONVERT_HISTORY,
   ADD_CONVERT_HISTORY,
-  DELETE_CONVERT_HISTORY
+  DELETE_CONVERT_HISTORY,
+  DELETE_ALL_CONVERT_HISTORY
 } from "./actionTypes"
 import DeviceInfo from "react-native-device-info"
 import firebase from "react-native-firebase"
@@ -78,15 +79,11 @@ const deleteHistory = historyID => {
 export const deleteHistoryFromFirebase = (historyID, originalHistories) => {
   // create a hash format data to send to firebase
   sendData = {}
-  console.log(historyID)
-  console.log(originalHistories)
   originalHistories
     .filter(h => h.id != historyID)
     .forEach((history, i) => {
       sendData[i] = history
     })
-
-  console.log(sendData)
 
   return dispatch => {
     return firebase
@@ -96,6 +93,28 @@ export const deleteHistoryFromFirebase = (historyID, originalHistories) => {
       .then(function() {
         // update redux aswell
         dispatch(deleteHistory(historyID))
+      })
+      .catch(error => {
+        throw error
+      })
+  }
+}
+
+const deleteAllHistory = () => {
+  return {
+    type: DELETE_ALL_CONVERT_HISTORY
+  }
+}
+
+export const deleteAllHistoryFromFirebase = () => {
+  return dispatch => {
+    return firebase
+      .database()
+      .ref(`/${deviceID}/histories/`)
+      .set({})
+      .then(function() {
+        // update redux aswell
+        dispatch(deleteAllHistory())
       })
       .catch(error => {
         throw error

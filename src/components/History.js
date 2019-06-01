@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 import { Container, Content, Text } from "native-base"
 import { connect } from "react-redux"
-
 import { fetchConvertHistoryFromFirebase } from "../store/actions/index"
 import HistoryCardList from "./HistoryCardList"
+import DeleteAllHistory from "./DeleteAllHistory"
 
 class History extends Component {
   static navigationOptions = {
@@ -12,7 +12,7 @@ class History extends Component {
       flex: 1
     },
     title: "History",
-    headerRight: <Content /> // needed for make the title center for Android
+    headerRight: <DeleteAllHistory />
   }
 
   render() {
@@ -38,6 +38,9 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchConvertHistory: () => {
       dispatch(fetchConvertHistoryFromFirebase())
+    },
+    onDeleteAllHistory: () => {
+      dispatch(deleteAllHistoryFromFirebase())
     }
   }
 }
