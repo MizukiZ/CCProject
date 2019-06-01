@@ -16,11 +16,13 @@ import {
 import { Grid, Row, Col } from "react-native-easy-grid"
 
 import CountryInfo from "../assets/counrty_Infomation_handler"
+import moment from "moment"
 // import { deleteCurrencyFromFirebase } from "../store/actions/index"
 
 class HistoryCard extends Component {
   render() {
-    const { timestamp, baseCurrency, otherCurrency, input, result } = this.props
+    const { baseCurrency, otherCurrency, input, result } = this.props
+    const timestamp = moment(this.props.timestamp)
 
     return (
       <Content style={{ margin: 5 }}>
@@ -50,8 +52,8 @@ class HistoryCard extends Component {
               <Card>
                 <CardItem>
                   <Grid>
-                    <Row style={{ alignItems: "center" }}>
-                      <Col size={30} style={{ alignItems: "center" }}>
+                    <Row style={styles.alignCenter}>
+                      <Col size={30} style={styles.alignCenter}>
                         <Row>
                           <Thumbnail
                             square
@@ -59,17 +61,19 @@ class HistoryCard extends Component {
                           />
                         </Row>
                         <Row>
-                          <Text>{input}</Text>
+                          <Text>{`${input}${
+                            CountryInfo[baseCurrency].currencySymbol
+                          }`}</Text>
                         </Row>
                       </Col>
-                      <Col size={10} style={{ alignItems: "center" }}>
+                      <Col size={10} style={styles.alignCenter}>
                         <Icon
                           type="FontAwesome"
                           name="exchange"
                           style={{ fontSize: 26 }}
                         />
                       </Col>
-                      <Col size={30} style={{ alignItems: "center" }}>
+                      <Col size={30} style={styles.alignCenter}>
                         <Row>
                           <Thumbnail
                             square
@@ -77,11 +81,22 @@ class HistoryCard extends Component {
                           />
                         </Row>
                         <Row>
-                          <Text>{result}</Text>
+                          <Text>{`${result}${
+                            CountryInfo[otherCurrency].currencySymbol
+                          }`}</Text>
                         </Row>
                       </Col>
-                      <Col size={30} style={{ alignItems: "center" }}>
-                        <Text>{timestamp}</Text>
+                      <Col size={30} style={styles.alignCenter}>
+                        <Row style={styles.alignCenter}>
+                          <Text style={styles.timestampStyle}>
+                            {timestamp.format("YYYY/MM/DD")}
+                          </Text>
+                        </Row>
+                        <Row style={styles.alignCenter}>
+                          <Text style={styles.timestampStyle}>
+                            {timestamp.format("hh:mm a")}
+                          </Text>
+                        </Row>
                       </Col>
                     </Row>
                   </Grid>
@@ -96,11 +111,11 @@ class HistoryCard extends Component {
 }
 
 const styles = StyleSheet.create({
-  currencyNameStyle: {
-    color: "grey"
+  alignCenter: {
+    alignItems: "center"
   },
-  currencyRateStyle: {
-    fontWeight: "bold"
+  timestampStyle: {
+    color: "gray"
   }
 })
 
