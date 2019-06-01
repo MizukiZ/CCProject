@@ -182,7 +182,6 @@ export const deleteCurrencyFromFirebase = (code, originalList) => {
       sendData[i] = currency
     })
 
-  console.log("SendData:" + JSON.stringify(sendData))
   return dispatch => {
     return firebase
       .database()
