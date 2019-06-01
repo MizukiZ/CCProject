@@ -16,9 +16,10 @@ import ModalSelector from "react-native-modal-selector"
 import CountryInfo from "../assets/counrty_Infomation_handler"
 
 import {
-  changeAutoConvertionHistorySaveFromFirebase,
+  changeConvertionHistorySaveFromFirebase,
   changeAutoLocationFromFirebase,
-  changeBaseCurrencyFromFirebase
+  changeBaseCurrencyFromFirebase,
+  fechDeviceSettingsFromFirebase
 } from "../store/actions/index"
 
 class Setting extends Component {
@@ -121,6 +122,17 @@ class Setting extends Component {
     )
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // when setting has changed, fech new setting
+    if (
+      prevProps.setting.autoLocation != this.props.setting.autoLocation ||
+      prevProps.setting.convertionHistorySave !=
+        this.props.setting.convertionHistorySave
+    ) {
+      this.props.onFetchDeviceSetting()
+    }
+  }
+
   componentDidMount() {
     // set user basecurrency
     const currency = this.props.setting.baseCurrency
@@ -148,10 +160,13 @@ const mapDispatchToProps = dispatch => {
       dispatch(changeBaseCurrencyFromFirebase(currencyCode))
     },
     onChangeHistorySave: flag => {
-      dispatch(changeAutoConvertionHistorySaveFromFirebase(flag))
+      dispatch(changeConvertionHistorySaveFromFirebase(flag))
     },
     onChangeAutoLocation: flag => {
       dispatch(changeAutoLocationFromFirebase(flag))
+    },
+    onFetchDeviceSetting: () => {
+      dispatch(fechDeviceSettingsFromFirebase())
     }
   }
 }

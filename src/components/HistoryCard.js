@@ -17,12 +17,12 @@ import { Grid, Row, Col } from "react-native-easy-grid"
 
 import CountryInfo from "../assets/counrty_Infomation_handler"
 import moment from "moment"
-// import { deleteCurrencyFromFirebase } from "../store/actions/index"
+import { deleteHistoryFromFirebase } from "../store/actions/index"
 
 class HistoryCard extends Component {
   render() {
-    const { baseCurrency, otherCurrency, input, result } = this.props
-    const timestamp = moment(this.props.timestamp)
+    const historyData = this.props.historyData
+    const timestamp = moment(historyData.timestamp)
 
     return (
       <Content style={{ margin: 5 }}>
@@ -35,9 +35,9 @@ class HistoryCard extends Component {
             <Button
               danger
               onPress={() => {
-                // this.props.onDeleteCurrency(currencyCode, [
-                //   ...this.props.displayCurrency
-                // ])
+                this.props.onDeleteHistory(historyData.id, [
+                  ...this.props.history
+                ])
               }}
             >
               <Icon
@@ -57,12 +57,12 @@ class HistoryCard extends Component {
                         <Row>
                           <Thumbnail
                             square
-                            source={CountryInfo[baseCurrency].flag}
+                            source={CountryInfo[historyData.baseCurrency].flag}
                           />
                         </Row>
                         <Row>
-                          <Text>{`${input}${
-                            CountryInfo[baseCurrency].currencySymbol
+                          <Text>{`${historyData.input}${
+                            CountryInfo[historyData.baseCurrency].currencySymbol
                           }`}</Text>
                         </Row>
                       </Col>
@@ -77,12 +77,13 @@ class HistoryCard extends Component {
                         <Row>
                           <Thumbnail
                             square
-                            source={CountryInfo[otherCurrency].flag}
+                            source={CountryInfo[historyData.otherCurrency].flag}
                           />
                         </Row>
                         <Row>
-                          <Text>{`${result}${
-                            CountryInfo[otherCurrency].currencySymbol
+                          <Text>{`${historyData.result}${
+                            CountryInfo[historyData.otherCurrency]
+                              .currencySymbol
                           }`}</Text>
                         </Row>
                       </Col>
@@ -125,14 +126,14 @@ const mapStateToProps = state => {
   }
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onDeleteCurrency: (currencyCode, originalList) =>
-//       dispatch(deleteCurrencyFromFirebase(currencyCode, originalList))
-//   }
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    onDeleteHistory: (historyID, originalHistory) =>
+      dispatch(deleteHistoryFromFirebase(historyID, originalHistory))
+  }
+}
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(HistoryCard)

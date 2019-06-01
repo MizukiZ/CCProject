@@ -86,15 +86,19 @@ class CurrencyDetail extends Component {
                       )
                       roundedResult = roundWithDecimalPoint(result, 4)
 
-                      //save the convertion history to firebase using despatch
-                      const historyData = {
-                        baseCurrency: this.props.baseCurrency,
-                        otherCurrency: currency,
-                        input: this.state.baseInput,
-                        result: roundedResult,
-                        timestamp: Date.now()
+                      if (this.props.autoHistorySave) {
+                        const historyData = {
+                          baseCurrency: this.props.baseCurrency,
+                          otherCurrency: currency,
+                          input: this.state.baseInput,
+                          result: roundedResult,
+                          timestamp: Date.now()
+                        }
+                        this.props.onAddHistory(historyData, [
+                          ...this.props.history
+                        ])
                       }
-                      this.props.onAddHistory(historyData, this.props.history)
+                      //save the convertion history to firebase using despatch
                       this.setState({ result: String(roundedResult) })
                     }}
                   >
@@ -194,6 +198,7 @@ const mapStateToProps = state => {
   return {
     currencyData: state.currency,
     baseCurrency: state.setting.baseCurrency,
+    autoHistorySave: state.setting.convertionHistorySave,
     history: state.history
   }
 }

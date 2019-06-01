@@ -5,6 +5,7 @@ import {
 } from "./actionTypes"
 import DeviceInfo from "react-native-device-info"
 import firebase from "react-native-firebase"
+import uuid from "../../helpers/uuid"
 
 const fetchConvertHistory = data => {
   return {
@@ -47,6 +48,8 @@ export const addHistoryFromFirebase = (newHistory, originalHistories) => {
   originalHistories.push(newHistory)
   sendData = {}
   originalHistories.forEach((history, i) => {
+    // set unique id
+    history.id = uuid()
     sendData[i] = history
   })
 
@@ -65,30 +68,34 @@ export const addHistoryFromFirebase = (newHistory, originalHistories) => {
   }
 }
 
-export const deleteCurrency = code => {
+const deleteHistory = historyID => {
   return {
-    type: DELETE_CURRENCY,
-    currencyCode: code
+    type: DELETE_CONVERT_HISTORY,
+    historyID: historyID
   }
 }
 
-export const deleteCurrencyFromFirebase = (code, originalList) => {
+export const deleteHistoryFromFirebase = (historyID, originalHistories) => {
   // create a hash format data to send to firebase
   sendData = {}
-  originalList
-    .filter(c => c != code)
-    .forEach((currency, i) => {
-      sendData[i] = currency
+  console.log(historyID)
+  console.log(originalHistories)
+  originalHistories
+    .filter(h => h.id != historyID)
+    .forEach((history, i) => {
+      sendData[i] = history
     })
+
+  console.log(sendData)
 
   return dispatch => {
     return firebase
       .database()
-      .ref(`/${deviceID}/settings/`)
-      .update({ displayCurrency: sendData })
-      .then(function(snapshot) {
+      .ref(`/${deviceID}/histories/`)
+      .set(sendData)
+      .then(function() {
         // update redux aswell
-        dispatch(deleteCurrency(code))
+        dispatch(deleteHistory(historyID))
       })
       .catch(error => {
         throw error

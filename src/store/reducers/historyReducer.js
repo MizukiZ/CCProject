@@ -12,13 +12,10 @@ export default function historyReducer(state = initialSettingState, action) {
       return action.data
     case ADD_CONVERT_HISTORY:
       return state.concat(action.data)
-    // case DELETE_CONVERT_HISTORY:
-    //   return {
-    //     ...state,
-    //     displayCurrency: state.displayCurrency.filter(currency => {
-    //       return currency != action.currencyCode
-    //     })
-    //   }
+    case DELETE_CONVERT_HISTORY:
+      return state.filter(history => {
+        return history.id != action.historyID
+      })
     default:
       return state
   }

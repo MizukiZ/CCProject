@@ -5,7 +5,7 @@ export {
 export { toggelCalculator } from "./calculator"
 export {
   changeAutoLocationFromFirebase,
-  changeAutoConvertionHistorySaveFromFirebase,
+  changeConvertionHistorySaveFromFirebase,
   changeBaseCurrencyFromFirebase,
   fechDeviceSettingsFromFirebase,
   addCurrencyFromFirebase,
@@ -14,5 +14,6 @@ export {
 
 export {
   fetchConvertHistoryFromFirebase,
-  addHistoryFromFirebase
+  addHistoryFromFirebase,
+  deleteHistoryFromFirebase
 } from "./histories"

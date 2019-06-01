@@ -9,7 +9,7 @@ import {
 
 initialSettingState = {
   baseCurrency: null,
-  autoConvertionHistorySave: true,
+  convertionHistorySave: true,
   autoLocation: false,
   displayCurrency: [],
   loaded: false
@@ -27,7 +27,7 @@ export default function settingReducer(state = initialSettingState, action) {
     case CHANGE_AUTO_CONVERTION_HISTORY_SAVE:
       return {
         ...state,
-        autoConvertionHistorySave: action.flag
+        convertionHistorySave: action.flag
       }
     case CHANGE_AUTO_LOCATION:
       return {

@@ -10,14 +10,14 @@ import DeviceInfo from "react-native-device-info"
 import firebase from "react-native-firebase"
 import { fetchCurrencyLatestData } from "./index"
 
-export const changeAutoConvertionHistorySave = flag => {
+const changeConvertionHistorySave = flag => {
   return {
     type: CHANGE_AUTO_CONVERTION_HISTORY_SAVE,
     flag: flag
   }
 }
 
-export const changeAutoConvertionHistorySaveFromFirebase = flag => {
+export const changeConvertionHistorySaveFromFirebase = flag => {
   return dispatch => {
     return firebase
       .database()
@@ -25,7 +25,7 @@ export const changeAutoConvertionHistorySaveFromFirebase = flag => {
       .update({ convertionHistorySave: flag })
       .then(function(snapshot) {
         // update redux aswell
-        dispatch(changeAutoConvertionHistorySave(flag))
+        dispatch(changeConvertionHistorySave(flag))
       })
       .catch(error => {
         throw error
@@ -33,7 +33,7 @@ export const changeAutoConvertionHistorySaveFromFirebase = flag => {
   }
 }
 
-export const changeAutoLocation = flag => {
+const changeAutoLocation = flag => {
   return {
     type: CHANGE_AUTO_LOCATION,
     flag: flag
@@ -56,7 +56,7 @@ export const changeAutoLocationFromFirebase = flag => {
   }
 }
 
-export const changeBaseCurrency = code => {
+const changeBaseCurrency = code => {
   return {
     type: CHANGE_BASE_CURRENCY,
     baseCurrency: code
@@ -80,7 +80,7 @@ export const changeBaseCurrencyFromFirebase = currencyCode => {
   }
 }
 
-export const fetchDeviceSettings = settings => {
+const fetchDeviceSettings = settings => {
   return {
     type: FETCH_DEVICE_SETTING,
     settings: settings
@@ -162,7 +162,7 @@ export const fechDeviceSettingsFromFirebase = () => {
   }
 }
 
-export const addCurrency = code => {
+const addCurrency = code => {
   return {
     type: ADD_CURRENCY,
     currencyCode: code
@@ -191,7 +191,7 @@ export const addCurrencyFromFirebase = (code, originalList) => {
   }
 }
 
-export const deleteCurrency = code => {
+const deleteCurrency = code => {
   return {
     type: DELETE_CURRENCY,
     currencyCode: code

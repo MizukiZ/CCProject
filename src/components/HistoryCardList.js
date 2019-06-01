@@ -13,14 +13,7 @@ class HistoryCardList extends Component {
           {this.props.history.map((history, i) => {
             return (
               <Row key={`card-${i}`}>
-                <HistoryCard
-                  key={`card-${i}`}
-                  baseCurrency={history.baseCurrency}
-                  otherCurrency={history.otherCurrency}
-                  input={history.input}
-                  result={history.result}
-                  timestamp={history.timestamp}
-                />
+                <HistoryCard key={`card-${i}`} historyData={history} />
               </Row>
             )
           })}
