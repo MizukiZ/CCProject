@@ -132,6 +132,16 @@ class CurrencyDetail extends Component {
                   {this.props.currencyData.comaprisonStatement}
                 </Text>
               </Row>
+              <Row style={{ justifyContent: "center", marginTop: 5 }}>
+                <Text
+                  style={{
+                    fontSize: 10,
+                    color: "gray"
+                  }}
+                >
+                  Rates are updated around 16:00 CET on every working day
+                </Text>
+              </Row>
               <CurrencyChart />
               <Row />
             </Grid>
