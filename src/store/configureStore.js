@@ -14,6 +14,7 @@ import { connect } from "react-redux"
 import currencyReducer from "./reducers/currencyReducer"
 import calculatorReducer from "./reducers/calculatorReducer"
 import settingReducer from "./reducers/settingReducer"
+import historyReducer from "./reducers/historyReducer"
 
 // rootstack created with config routes
 const RootStack = createStackNavigator(Routes, { initialRouteName: "Home" })
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   nav: navReducer,
   currency: currencyReducer,
   calculator: calculatorReducer,
-  setting: settingReducer
+  setting: settingReducer,
+  history: historyReducer
 })
 
 const navMiddleware = createReactNavigationReduxMiddleware(state => state.nav)

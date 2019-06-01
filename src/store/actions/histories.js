@@ -6,53 +6,6 @@ import {
 import DeviceInfo from "react-native-device-info"
 import firebase from "react-native-firebase"
 
-export const changeAutoLocation = flag => {
-  return {
-    type: CHANGE_AUTO_LOCATION,
-    flag: flag
-  }
-}
-
-export const changeAutoLocationFromFirebase = flag => {
-  return dispatch => {
-    return firebase
-      .database()
-      .ref(`/${deviceID}/settings/`)
-      .update({ autoLocation: flag })
-      .then(function(snapshot) {
-        // update redux aswell
-        dispatch(changeAutoLocation(flag))
-      })
-      .catch(error => {
-        throw error
-      })
-  }
-}
-
-export const changeBaseCurrency = code => {
-  return {
-    type: CHANGE_BASE_CURRENCY,
-    baseCurrency: code
-  }
-}
-
-export const changeBaseCurrencyFromFirebase = currencyCode => {
-  return dispatch => {
-    return firebase
-      .database()
-      .ref(`/${deviceID}/settings/`)
-      .update({ baseCurrency: currencyCode })
-      .then(function(snapshot) {
-        // update redux aswell
-        dispatch(fetchCurrencyLatestData(currencyCode))
-        dispatch(changeBaseCurrency(currencyCode))
-      })
-      .catch(error => {
-        throw error
-      })
-  }
-}
-
 export const fetchConvertHistory = data => {
   return {
     type: FETCH_CONVERT_HISTORY,
@@ -60,49 +13,37 @@ export const fetchConvertHistory = data => {
   }
 }
 
-export const fechDeviceSettingsFromFirebase = () => {
+export const fetchConvertHistoryFromFirebase = () => {
   // get unique device id
   deviceID = DeviceInfo.getUniqueID()
 
   return dispatch => {
     return firebase
       .database()
-      .ref("/history/" + deviceID)
+      .ref(`/${deviceID}/histories/`)
       .once("value")
       .then(function(snapshot) {
-        // if there is an exsisting settings for the currenct device
+        // if there is an exsisting convertion history for the currenct device
         if (snapshot.val()) {
           // get each value from snapshot
           const {
             baseCurrency,
-            convertionHistorySave,
-            autoLocation,
-            displayCurrency
+            otherCurrncy,
+            baseValue,
+            result,
+            timestamp
           } = snapshot.val()
 
           // dispatch the mothod to update state
           dispatch(
-            fetchDeviceSettings({
+            fetchConvertHistory({
               baseCurrency,
-              convertionHistorySave,
-              autoLocation,
-              displayCurrency,
-              loaded: true
+              otherCurrncy,
+              baseValue,
+              result,
+              timestamp
             })
           )
-        } else {
-          // if there is no setting for the device then create setting with default values
-
-          firebase
-            .database()
-            .ref(`/${deviceID}/settings/`)
-            .set({
-              baseCurrency: "AUD",
-              convertionHistorySave: true,
-              autoLocation: false,
-              displayCurrency: { 0: "JPY" },
-              loaded: true
-            })
         }
       })
       .catch(error => {
@@ -111,28 +52,29 @@ export const fechDeviceSettingsFromFirebase = () => {
   }
 }
 
-export const addCurrency = code => {
+export const addHistory = data => {
   return {
     type: ADD_CURRENCY,
-    currencyCode: code
+    data: data
   }
 }
 
-export const addCurrencyFromFirebase = (code, originalList) => {
+export const addHistoryFromFirebase = (newHistory, originalHistories) => {
   // create a hash format data to send to firebase
-  originalList.push(code)
+  originalHistories.push(newHistory)
   sendData = {}
-  originalList.forEach((currency, i) => {
-    sendData[i] = currency
+  originalHistories.forEach((history, i) => {
+    sendData[i] = history
   })
+
   return dispatch => {
     return firebase
       .database()
-      .ref(`/${deviceID}/settings/`)
-      .update({ displayCurrency: sendData })
+      .ref(`/${deviceID}/histories/`)
+      .update(sendData)
       .then(function(snapshot) {
         // update redux aswell
-        dispatch(addCurrency(code))
+        dispatch(addHistory(newHistory))
       })
       .catch(error => {
         throw error

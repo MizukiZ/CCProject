@@ -126,8 +126,7 @@ export const fechDeviceSettingsFromFirebase = () => {
               baseCurrency: "AUD",
               convertionHistorySave: true,
               autoLocation: false,
-              displayCurrency: { 0: "JPY" },
-              loaded: true
+              displayCurrency: { 0: "JPY" }
             })
             .then(function() {
               // after initial setting fetch data again
@@ -150,8 +149,7 @@ export const fechDeviceSettingsFromFirebase = () => {
                       baseCurrency,
                       convertionHistorySave,
                       autoLocation,
-                      displayCurrency,
-                      loaded: true
+                      displayCurrency
                     })
                   )
                 })
