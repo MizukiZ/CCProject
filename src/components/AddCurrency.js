@@ -58,7 +58,9 @@ class AddCurrency extends Component {
               name="money"
               style={{ fontSize: 30, color: "blue" }}
             />
-            <Text>Add Currency</Text>
+            <Text style={{ fontFamily: "Kanit-SemiBoldItalic" }}>
+              Add Currency
+            </Text>
           </Button>
         ) : (
           <Spinner color="gray" />
