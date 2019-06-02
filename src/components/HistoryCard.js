@@ -76,7 +76,9 @@ class HistoryCard extends Component {
                           />
                         </Row>
                         <Row>
-                          <Text>{`${historyData.input}${
+                          <Text style={{ fontFamily: "Kanit-Regular" }}>{`${
+                            historyData.input
+                          }${
                             CountryInfo[historyData.baseCurrency].currencySymbol
                           }`}</Text>
                         </Row>
@@ -96,7 +98,9 @@ class HistoryCard extends Component {
                           />
                         </Row>
                         <Row>
-                          <Text>{`${historyData.result}${
+                          <Text style={{ fontFamily: "Kanit-Regular" }}>{`${
+                            historyData.result
+                          }${
                             CountryInfo[historyData.otherCurrency]
                               .currencySymbol
                           }`}</Text>
@@ -131,7 +135,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   timestampStyle: {
-    color: "gray"
+    color: "gray",
+    fontFamily: "Kanit-Italic"
   }
 })
 

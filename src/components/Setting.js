@@ -29,7 +29,9 @@ class Setting extends Component {
   static navigationOptions = {
     headerTitleStyle: {
       textAlign: "center",
-      flex: 1
+      flex: 1,
+      fontFamily: "Kanit-BoldItalic",
+      fontWeight: "200"
     },
     title: "Setting",
     headerRight: <Content />
@@ -80,7 +82,8 @@ class Setting extends Component {
                 style={{
                   padding: 10,
                   fontSize: 16,
-                  color: "black"
+                  color: "black",
+                  fontFamily: "Kanit-Regular"
                 }}
                 editable={false}
                 value={`Base Currency: ${this.state.baseCurrencyLabel}`}
@@ -121,7 +124,9 @@ class Setting extends Component {
               }}
             />
             <Body>
-              <Text>Enable Convertion History Save</Text>
+              <Text style={{ fontFamily: "Kanit-Regular" }}>
+                Enable Convertion History Save
+              </Text>
             </Body>
           </ListItem>
           <ListItem>
@@ -165,7 +170,9 @@ class Setting extends Component {
               }}
             />
             <Body>
-              <Text>Enable Auto Country Detection</Text>
+              <Text style={{ fontFamily: "Kanit-Regular" }}>
+                Enable Auto Country Detection
+              </Text>
             </Body>
           </ListItem>
         </Content>

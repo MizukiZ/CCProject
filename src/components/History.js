@@ -10,7 +10,9 @@ class History extends Component {
   static navigationOptions = {
     headerTitleStyle: {
       textAlign: "center",
-      flex: 1
+      flex: 1,
+      fontFamily: "Kanit-BoldItalic",
+      fontWeight: "200"
     },
     title: "History",
     headerRight: <DeleteAllHistory />
