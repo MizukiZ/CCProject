@@ -83,7 +83,7 @@ class CurrencyCard extends Component {
                         </Col>
                         <Col size={40}>
                           <Row>
-                            <Text style={{ fontFamily: "Kanit-Medium" }}>
+                            <Text style={{ fontFamily: "Kanit-Regular" }}>
                               {currencyCode}
                             </Text>
                           </Row>
@@ -94,7 +94,7 @@ class CurrencyCard extends Component {
                           </Row>
                         </Col>
                         <Col size={35} style={{ alignItems: "center" }}>
-                          <Text style={styles.currencyRateStyle}>
+                          <Text style={{ fontFamily: "Kanit-Regular" }}>
                             {`${roundWithDecimalPoint(
                               currencyData.latestData[currencyCode],
                               4
@@ -117,10 +117,7 @@ class CurrencyCard extends Component {
 const styles = StyleSheet.create({
   currencyNameStyle: {
     color: "grey",
-    fontFamily: "Kanit-Regular"
-  },
-  currencyRateStyle: {
-    fontFamily: "Kanit-Medium"
+    fontFamily: "Kanit-Light"
   }
 })
 
