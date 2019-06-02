@@ -55,14 +55,14 @@ class CurrencyDetail extends Component {
                 <Thumbnail square source={CountryInfo[currency].flag} />
               </Row>
               <Row style={{ justifyContent: "center" }}>
-                <Text style={{ fontWeight: "bold" }}>
+                <Text style={{ fontFamily: "Kanit-SemiBold" }}>
                   {CountryInfo[currency].currencyName}
                 </Text>
               </Row>
               <Row style={{ margin: 40 }}>
                 <Col size={40} style={{ alignItems: "center" }}>
                   <Row>
-                    <Text style={{ fontWeight: "bold" }}>
+                    <Text style={{ fontFamily: "Kanit-Regular" }}>
                       {this.props.baseCurrency}
                     </Text>
                   </Row>
@@ -129,7 +129,13 @@ class CurrencyDetail extends Component {
                 </Col>
                 <Col size={40} style={{ alignItems: "center" }}>
                   <Row>
-                    <Text style={{ fontWeight: "bold" }}>{currency}</Text>
+                    <Text
+                      style={{
+                        fontFamily: "Kanit-Regular"
+                      }}
+                    >
+                      {currency}
+                    </Text>
                   </Row>
                   <Row>
                     <TextInput
@@ -143,18 +149,35 @@ class CurrencyDetail extends Component {
                 </Col>
               </Row>
               <Row style={{ justifyContent: "center" }}>
-                <Text style={{ fontWeight: "bold", marginRight: 10 }}>
+                <Text
+                  style={{
+                    marginRight: 10,
+                    fontFamily: "Kanit-Medium"
+                  }}
+                >
                   {this.props.currencyData.generalStatement}
                 </Text>
-                <Text style={{ color: this.props.currencyData.stateColor }}>
+                <Text
+                  style={{
+                    color: this.props.currencyData.stateColor,
+                    fontFamily: "Kanit-Italic"
+                  }}
+                >
                   {this.props.currencyData.comaprisonStatement}
                 </Text>
               </Row>
-              <Row style={{ justifyContent: "center", marginTop: 5 }}>
+              <Row
+                style={{
+                  justifyContent: "center",
+                  marginTop: 5,
+                  fontFamily: "Kanit-Regular"
+                }}
+              >
                 <Text
                   style={{
                     fontSize: 10,
-                    color: "gray"
+                    color: "gray",
+                    fontFamily: "Kanit-LightItalic"
                   }}
                 >
                   Rates are updated around 16:00 CET on every working day

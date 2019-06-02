@@ -29,7 +29,9 @@ class App extends Component<Props> {
   static navigationOptions = ({ navigation }) => ({
     headerTitleStyle: {
       textAlign: "center",
-      flex: 1
+      flex: 1,
+      fontFamily: "Kanit-BoldItalic",
+      fontWeight: "200"
     },
     title: "Dashboard",
     headerRight: <BaseCurrency />,

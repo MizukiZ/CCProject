@@ -83,7 +83,9 @@ class CurrencyCard extends Component {
                         </Col>
                         <Col size={40}>
                           <Row>
-                            <Text>{currencyCode}</Text>
+                            <Text style={{ fontFamily: "Kanit-Medium" }}>
+                              {currencyCode}
+                            </Text>
                           </Row>
                           <Row>
                             <Text style={styles.currencyNameStyle}>
@@ -114,10 +116,11 @@ class CurrencyCard extends Component {
 
 const styles = StyleSheet.create({
   currencyNameStyle: {
-    color: "grey"
+    color: "grey",
+    fontFamily: "Kanit-Regular"
   },
   currencyRateStyle: {
-    fontWeight: "bold"
+    fontFamily: "Kanit-Medium"
   }
 })
 
