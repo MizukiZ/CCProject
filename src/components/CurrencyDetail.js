@@ -31,7 +31,9 @@ class CurrencyDetail extends Component {
   static navigationOptions = {
     headerTitleStyle: {
       textAlign: "center",
-      flex: 1
+      flex: 1,
+      fontFamily: "Kanit-BoldItalic",
+      fontWeight: "200"
     },
     title: "Details",
     headerRight: <BaseCurrency />
@@ -55,7 +57,7 @@ class CurrencyDetail extends Component {
                 <Thumbnail square source={CountryInfo[currency].flag} />
               </Row>
               <Row style={{ justifyContent: "center" }}>
-                <Text style={{ fontFamily: "Kanit-SemiBold" }}>
+                <Text style={{ fontFamily: "Kanit-Bold" }}>
                   {CountryInfo[currency].currencyName}
                 </Text>
               </Row>
@@ -160,7 +162,7 @@ class CurrencyDetail extends Component {
                 <Text
                   style={{
                     color: this.props.currencyData.stateColor,
-                    fontFamily: "Kanit-Italic"
+                    fontFamily: "Kanit-LightItalic"
                   }}
                 >
                   {this.props.currencyData.comaprisonStatement}
@@ -175,7 +177,7 @@ class CurrencyDetail extends Component {
               >
                 <Text
                   style={{
-                    fontSize: 10,
+                    fontSize: 11,
                     color: "gray",
                     fontFamily: "Kanit-LightItalic"
                   }}
