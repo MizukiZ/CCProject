@@ -8,7 +8,8 @@ import {
   Thumbnail,
   Text,
   Icon,
-  Spinner
+  Spinner,
+  Toast
 } from "native-base"
 import { TextInput } from "react-native"
 import { Grid, Row, Col } from "react-native-easy-grid"
@@ -19,6 +20,8 @@ import {
   roundWithDecimalPoint,
   getComparisonData
 } from "../helpers/caluculate"
+
+import { numberValidation } from "../helpers/validation"
 
 import {
   fetchCurrencyHistoricalData,
@@ -83,26 +86,38 @@ class CurrencyDetail extends Component {
                     transparent
                     style={{ alignSelf: "center" }}
                     onPress={() => {
-                      const result = convertCurrency(
-                        Number(this.state.baseInput),
-                        this.state.rate
-                      )
-                      roundedResult = roundWithDecimalPoint(result, 4)
+                      // set validtion if the input is number
+                      if (numberValidation(this.state.baseInput.trim())) {
+                        // pass the validation
 
-                      if (this.props.autoHistorySave) {
-                        const historyData = {
-                          baseCurrency: this.props.baseCurrency,
-                          otherCurrency: currency,
-                          input: this.state.baseInput,
-                          result: roundedResult,
-                          timestamp: Date.now()
+                        const result = convertCurrency(
+                          Number(this.state.baseInput),
+                          this.state.rate
+                        )
+                        roundedResult = roundWithDecimalPoint(result, 4)
+
+                        if (this.props.autoHistorySave) {
+                          const historyData = {
+                            baseCurrency: this.props.baseCurrency,
+                            otherCurrency: currency,
+                            input: this.state.baseInput,
+                            result: roundedResult,
+                            timestamp: Date.now()
+                          }
+                          this.props.onAddHistory(historyData, [
+                            ...this.props.history
+                          ])
                         }
-                        this.props.onAddHistory(historyData, [
-                          ...this.props.history
-                        ])
+                        //save the convertion history to firebase using despatch
+                        this.setState({ result: String(roundedResult) })
+                      } else {
+                        // fail the validation
+                        Toast.show({
+                          text: "Please Enter A Number",
+                          duration: 1000,
+                          type: "danger"
+                        })
                       }
-                      //save the convertion history to firebase using despatch
-                      this.setState({ result: String(roundedResult) })
                     }}
                   >
                     <Icon
