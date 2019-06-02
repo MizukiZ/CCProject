@@ -1,9 +1,10 @@
 import React, { Component } from "react"
-import { Container, Content, Text } from "native-base"
+import { Container, Content, Text, to } from "native-base"
 import { connect } from "react-redux"
 import { fetchConvertHistoryFromFirebase } from "../store/actions/index"
 import HistoryCardList from "./HistoryCardList"
 import DeleteAllHistory from "./DeleteAllHistory"
+import NetInfo from "@react-native-community/netinfo"
 
 class History extends Component {
   static navigationOptions = {
@@ -38,9 +39,6 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchConvertHistory: () => {
       dispatch(fetchConvertHistoryFromFirebase())
-    },
-    onDeleteAllHistory: () => {
-      dispatch(deleteAllHistoryFromFirebase())
     }
   }
 }

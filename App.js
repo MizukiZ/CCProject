@@ -11,7 +11,7 @@ import { connect } from "react-redux"
 import { fetchCurrencyHistoricalData } from "./src/store/actions/index"
 
 // native base component
-import { Container, Content, Thumbnail } from "native-base"
+import { Container, Content, Thumbnail, Toast } from "native-base"
 
 // import components
 import CCFooter from "./src/components/Footer"
@@ -24,7 +24,7 @@ import Geocoder from "react-native-geocoder"
 import { countries, currencies, lookup } from "country-data"
 
 import { changeBaseCurrencyFromFirebase } from "./src/store/actions/index"
-
+import NetInfo from "@react-native-community/netinfo"
 class App extends Component<Props> {
   static navigationOptions = ({ navigation }) => ({
     headerTitleStyle: {
@@ -48,7 +48,6 @@ class App extends Component<Props> {
   }
 
   autoLocationDetection = () => {
-    console.log("DETECT!")
     navigator.geolocation.getCurrentPosition(
       position => {
         const userPosition = {
@@ -77,6 +76,17 @@ class App extends Component<Props> {
   }
 
   componentDidMount() {
+    NetInfo.fetch().then(state => {
+      // initial check if the device is online
+      if (!state.isConnected) {
+        Toast.show({
+          text: "Sorry this app is not operatable with offline environment!",
+          buttonText: "Ok",
+          type: "danger",
+          duration: 60000
+        })
+      }
+    })
     // if autoLacation is enabled
     if (this.props.autoLocation) {
       this.autoLocationDetection()

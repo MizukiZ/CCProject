@@ -23,6 +23,8 @@ import {
   fechDeviceSettingsFromFirebase
 } from "../store/actions/index"
 
+import NetInfo from "@react-native-community/netinfo"
+
 class Setting extends Component {
   static navigationOptions = {
     headerTitleStyle: {
@@ -56,9 +58,22 @@ class Setting extends Component {
             <ModalSelector
               data={data}
               onChange={option => {
-                this.setState({ baseCurrencyLabel: option.label })
-                const currencyCode = option.customKey
-                this.props.onChangeBaseCurrency(currencyCode)
+                NetInfo.fetch().then(state => {
+                  // initial check if the device is online
+                  if (!state.isConnected) {
+                    Toast.show({
+                      text:
+                        "Sorry this app is not operatable with offline environment!",
+                      buttonText: "Ok",
+                      type: "danger",
+                      duration: 60000
+                    })
+                  } else {
+                    this.setState({ baseCurrencyLabel: option.label })
+                    const currencyCode = option.customKey
+                    this.props.onChangeBaseCurrency(currencyCode)
+                  }
+                })
               }}
             >
               <TextInput
@@ -79,17 +94,30 @@ class Setting extends Component {
                 margin: 10
               }}
               onPress={() => {
-                // toggle history save check
-                this.setState(
-                  {
-                    convertionHistorySave: !this.state.convertionHistorySave
-                  },
-                  () => {
-                    this.props.onChangeHistorySave(
-                      this.state.convertionHistorySave
+                NetInfo.fetch().then(state => {
+                  // initial check if the device is online
+                  if (!state.isConnected) {
+                    Toast.show({
+                      text:
+                        "Sorry this app is not operatable with offline environment!",
+                      buttonText: "Ok",
+                      type: "danger",
+                      duration: 60000
+                    })
+                  } else {
+                    // toggle history save check
+                    this.setState(
+                      {
+                        convertionHistorySave: !this.state.convertionHistorySave
+                      },
+                      () => {
+                        this.props.onChangeHistorySave(
+                          this.state.convertionHistorySave
+                        )
+                      }
                     )
                   }
-                )
+                })
               }}
             />
             <Body>
@@ -103,24 +131,37 @@ class Setting extends Component {
               }}
               checked={this.state.autoLocation}
               onPress={() => {
-                if (!this.props.setting.autoLocation) {
-                  Toast.show({
-                    text: "Please Make Sure Your GPS Is On!",
-                    buttonText: "Ok",
-                    duration: 5000,
-                    type: "warning"
-                  })
-                }
+                NetInfo.fetch().then(state => {
+                  // initial check if the device is online
+                  if (!state.isConnected) {
+                    Toast.show({
+                      text:
+                        "Sorry this app is not operatable with offline environment!",
+                      buttonText: "Ok",
+                      type: "danger",
+                      duration: 60000
+                    })
+                  } else {
+                    if (!this.props.setting.autoLocation) {
+                      Toast.show({
+                        text: "Please Make Sure Your GPS Is On!",
+                        buttonText: "Ok",
+                        duration: 5000,
+                        type: "warning"
+                      })
+                    }
 
-                // toggle history save check
-                this.setState(
-                  {
-                    autoLocation: !this.state.autoLocation
-                  },
-                  () => {
-                    this.props.onChangeAutoLocation(this.state.autoLocation)
+                    // toggle history save check
+                    this.setState(
+                      {
+                        autoLocation: !this.state.autoLocation
+                      },
+                      () => {
+                        this.props.onChangeAutoLocation(this.state.autoLocation)
+                      }
+                    )
                   }
-                )
+                })
               }}
             />
             <Body>
