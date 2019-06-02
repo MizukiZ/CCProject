@@ -11,13 +11,16 @@ import {
   Button,
   Thumbnail,
   SwipeRow,
-  View
+  View,
+  Toast
 } from "native-base"
 import { Grid, Row, Col } from "react-native-easy-grid"
 
 import CountryInfo from "../assets/counrty_Infomation_handler"
 import { roundWithDecimalPoint } from "../helpers/caluculate"
 import { deleteCurrencyFromFirebase } from "../store/actions/index"
+
+import NetInfo from "@react-native-community/netinfo"
 
 class CurrencyCard extends Component {
   render() {
@@ -34,9 +37,22 @@ class CurrencyCard extends Component {
             <Button
               danger
               onPress={() => {
-                this.props.onDeleteCurrency(currencyCode, [
-                  ...this.props.displayCurrency
-                ])
+                NetInfo.fetch().then(state => {
+                  // initial check if the device is online
+                  if (!state.isConnected) {
+                    Toast.show({
+                      text:
+                        "Sorry this app is not operatable with offline environment!",
+                      buttonText: "Ok",
+                      type: "danger",
+                      duration: 60000
+                    })
+                  } else {
+                    this.props.onDeleteCurrency(currencyCode, [
+                      ...this.props.displayCurrency
+                    ])
+                  }
+                })
               }}
             >
               <Icon

@@ -11,13 +11,15 @@ import {
   Button,
   Thumbnail,
   SwipeRow,
-  View
+  View,
+  Toast
 } from "native-base"
 import { Grid, Row, Col } from "react-native-easy-grid"
 
 import CountryInfo from "../assets/counrty_Infomation_handler"
 import moment from "moment"
 import { deleteHistoryFromFirebase } from "../store/actions/index"
+import NetInfo from "@react-native-community/netinfo"
 
 class HistoryCard extends Component {
   render() {
@@ -35,9 +37,22 @@ class HistoryCard extends Component {
             <Button
               danger
               onPress={() => {
-                this.props.onDeleteHistory(historyData.id, [
-                  ...this.props.history
-                ])
+                NetInfo.fetch().then(state => {
+                  // initial check if the device is online
+                  if (!state.isConnected) {
+                    Toast.show({
+                      text:
+                        "Sorry this app is not operatable with offline environment!",
+                      buttonText: "Ok",
+                      type: "danger",
+                      duration: 60000
+                    })
+                  } else {
+                    this.props.onDeleteHistory(historyData.id, [
+                      ...this.props.history
+                    ])
+                  }
+                })
               }}
             >
               <Icon

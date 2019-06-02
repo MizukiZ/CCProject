@@ -1,9 +1,11 @@
 import React, { Component } from "react"
-import { Button, Icon, Text, Spinner } from "native-base"
+import { Button, Icon, Text, Spinner, Toast } from "native-base"
 import { connect } from "react-redux"
 import { addCurrencyFromFirebase } from "../store/actions/index"
 import CountryInfo from "../assets/counrty_Infomation_handler"
 import ModalSelector from "react-native-modal-selector"
+
+import NetInfo from "@react-native-community/netinfo"
 
 class AddCurrency extends Component {
   state = {
@@ -29,11 +31,24 @@ class AddCurrency extends Component {
         data={data}
         cancelButtonAccessibilityLabel={"Cancel Button"}
         onChange={option => {
-          // set change loaded false to show spinner
-          this.setState({ isChnageLoaded: false })
-          this.props.onAddCurrency(option.customKey, [
-            ...this.props.displayCurrency
-          ])
+          NetInfo.fetch().then(state => {
+            // initial check if the device is online
+            if (!state.isConnected) {
+              Toast.show({
+                text:
+                  "Sorry this app is not operatable with offline environment!",
+                buttonText: "Ok",
+                type: "danger",
+                duration: 60000
+              })
+            } else {
+              // set change loaded false to show spinner
+              this.setState({ isChnageLoaded: false })
+              this.props.onAddCurrency(option.customKey, [
+                ...this.props.displayCurrency
+              ])
+            }
+          })
         }}
       >
         {this.state.isChnageLoaded ? (

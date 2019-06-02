@@ -48,7 +48,6 @@ class App extends Component<Props> {
   }
 
   autoLocationDetection = () => {
-    console.log("DETECT!")
     navigator.geolocation.getCurrentPosition(
       position => {
         const userPosition = {
