@@ -26,7 +26,10 @@ import {
 } from "../store/actions/index"
 class CurrencyDetail extends Component {
   static navigationOptions = {
-    headerTitleStyle: { alignSelf: "center" },
+    headerTitleStyle: {
+      textAlign: "center",
+      flex: 1
+    },
     title: "Details",
     headerRight: <BaseCurrency />
   }
