@@ -25,6 +25,7 @@ import { countries, currencies, lookup } from "country-data"
 
 import { changeBaseCurrencyFromFirebase } from "./src/store/actions/index"
 import NetInfo from "@react-native-community/netinfo"
+import SplashScreen from "react-native-splash-screen"
 class App extends Component<Props> {
   static navigationOptions = ({ navigation }) => ({
     headerTitleStyle: {
@@ -78,6 +79,8 @@ class App extends Component<Props> {
   }
 
   componentDidMount() {
+    SplashScreen.hide()
+
     NetInfo.fetch().then(state => {
       // initial check if the device is online
       if (!state.isConnected) {

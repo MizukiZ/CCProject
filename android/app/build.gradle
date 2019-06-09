@@ -153,6 +153,9 @@ dependencies {
     implementation "com.google.firebase:firebase-core:16.0.8"
     implementation "com.google.firebase:firebase-database:16.1.0"
     implementation project(':react-native-geocoder')
+
+    // splash screen
+    implementation project(':react-native-splash-screen')
 }
 
 // Run this once to be able to run the application with BUCK

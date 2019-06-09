@@ -16,6 +16,8 @@ import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import java.util.Arrays;
 import java.util.List;
 import com.devfd.RNGeocoder.RNGeocoderPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -35,7 +37,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFirebasePackage(),
               new RNFirebaseDatabasePackage(),
             new RNDeviceInfo(),
-      new RNGeocoderPackage()
+      new RNGeocoderPackage(),
+      new SplashScreenReactPackage()
       );
     }
 
